@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ladies On The Go - Home</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Ladies On The Go</h1>
+    <nav>
+      <a href="login.html">Login</a>
+      <a href="cadastro.html">Cadastro</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="search-box">
+      <input type="text" id="search-input" placeholder="Pesquisar por destino ou palavra-chave">
+      <button id="search-button">Buscar</button>
+    </section>
+
+    <section class="post-box">
+      <h2>Postagens Recentes</h2>
+      <form>
+        <textarea id="post-text" placeholder="Digite sua postagem..."></textarea>
+        <button type="submit">Postar</button>
+      </form>
+    </section>
+
+    <section class="timeline">
+      <h2>Timeline</h2>
+      <div class="post">
+        <div class="post-header">
+          <img src="user-avatar.jpg" alt="Nome do Usuário">
+          <h3>Nome do Usuário</h3>
+        </div>
+        <div class="post-content">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus sem non dapibus facilisis.</p>
+        </div>
+        <div class="post-actions">
+          <button class="like-button">Curtir</button>
+          <button class="comment-button">Comentar</button>
+        </div>
+      </div>
+
+      <!-- Outras postagens -->
+
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Ladies On The Go. Todos os direitos reservados.</p>
+  </footer>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

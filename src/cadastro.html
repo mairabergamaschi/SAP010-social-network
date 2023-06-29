@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ladies On The Go - Cadastro</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Ladies On The Go</h1>
+    <nav>
+      <a href="login.html">Login</a>
+      <a href="cadastro.html">Cadastro</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="form">
+      <h2>Cadastro</h2>
+      <form>
+        <label for="name">Nome completo:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="confirm-password">Confirmar senha:</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+
+        <button type="submit">Cadastrar</button>
+      </form>
+
+      <p>ou cadastre-se com:</p>
+      <div class="social-login">
+        <a href="#" class="google-login">Google</a>
+        <a href="#" class="facebook-login">Facebook</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Ladies On The Go. Todos os direitos reservados.</p>
+  </footer>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>

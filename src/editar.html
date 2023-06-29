@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ladies On The Go - Editar Perfil</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Ladies On The Go</h1>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="#">Notificações</a>
+      <a href="perfil.html">Perfil</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="user-profile">
+      <div class="profile-header">
+        <img src="user-avatar.jpg" alt="Nome do Usuário">
+        <h2>Nome do Usuário</h2>
+      </div>
+      <div class="profile-content">
+        <h3>Editar Perfil</h3>
+        <form>
+          <div>
+            <label for="fullname">Nome Completo:</label>
+            <input type="text" id="fullname" name="fullname">
+          </div>
+          <div>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email">
+          </div>
+          <div>
+            <label for="phone">Telefone:</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          <div>
+            <label for="birthdate">Data de Nascimento:</label>
+            <input type="date" id="birthdate" name="birthdate">
+          </div>
+          <div>
+            <label for="notifications">Notificações:</label>
+            <select id="notifications" name="notifications">
+              <option value="enabled">Ativadas</option>
+              <option value="disabled">Desativadas</option>
+            </select>
+          </div>
+          <div>
+            <label for="security">Segurança:</label>
+            <input type="password" id="security" name="security">
+          </div>
+          <button type="submit">Salvar Alterações</button>
+        </form>
+        <button class="logout-button">Sair</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Ladies On The Go. Todos os direitos reservados.</p>
+  </footer>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
