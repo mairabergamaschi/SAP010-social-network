@@ -1,26 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Ladies On The Go - Editar Perfil</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header>
-    <h1>Ladies On The Go</h1>
-    <nav>
-      <a href="home.html">Home</a>
-      <a href="#">Notificações</a>
-      <a href="perfil.html">Perfil</a>
-    </nav>
-  </header>
+export default () => {
+  const container = document.createElement('div');
 
-  <main>
+  const editarPerfil = `
     <section class="user-profile">
       <div class="profile-header">
-        <img src="user-avatar.jpg" alt="Nome do Usuário">
+        <img src="user-avatar.jpg" alt="Nome do Usuário"></img>
         <h2>Nome do Usuário</h2>
       </div>
       <div class="profile-content">
@@ -28,19 +12,19 @@
         <form>
           <div>
             <label for="fullname">Nome Completo:</label>
-            <input type="text" id="fullname" name="fullname">
+            <input type="text" id="fullname" name="fullname"></input>
           </div>
           <div>
             <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email">
+            <input type="email" id="email" name="email"></input>
           </div>
           <div>
             <label for="phone">Telefone:</label>
-            <input type="tel" id="phone" name="phone">
+            <input type="tel" id="phone" name="phone"></input>
           </div>
           <div>
             <label for="birthdate">Data de Nascimento:</label>
-            <input type="date" id="birthdate" name="birthdate">
+            <input type="date" id="birthdate" name="birthdate"></input>
           </div>
           <div>
             <label for="notifications">Notificações:</label>
@@ -51,19 +35,17 @@
           </div>
           <div>
             <label for="security">Segurança:</label>
-            <input type="password" id="security" name="security">
+            <input type="password" id="security" name="security"></input>
           </div>
           <button type="submit">Salvar Alterações</button>
         </form>
         <button class="logout-button">Sair</button>
       </div>
     </section>
-  </main>
+  `;
 
-  <footer>
-    <p>&copy; 2023 Ladies On The Go. Todos os direitos reservados.</p>
-  </footer>
+  container.innerHTML = editarPerfil;
 
-  <script type="module" src="main.js"></script>
-</body>
-</html>
+  return container;
+};
+

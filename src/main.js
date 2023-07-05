@@ -1,28 +1,68 @@
-// Este es el punto de entrada de tu aplicacion
+import home from './Pages/Home/home.js'
+import login from './pages/Login/login.js';
+import cadastro from './Pages/Cadastro/cadastro.js';
+import feed from './Pages/Feed/feed.js';
+import perfil from './Pages/Perfil/perfil.js';
+import editarPerfil from './Pages/Editar/editar.js';
+import { signInWithGoogle, signInWithFacebook } from './firebase/auth.js';
+import { checkLoggedUser } from './firebase/auth.js';
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from 'firebase/app';
-// TODO: Add SDKs for Firebase products that you want to use
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { myFunction } from './lib/index.js';
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: 'AIzaSyD8t4N-aXbeJKMNRkOGgLyBCJc8ueg4VEo',
-  authDomain: 'ladiesonthego-13672.firebaseapp.com',
-  projectId: 'ladiesonthego-13672',
-  storageBucket: 'ladiesonthego-13672.appspot.com',
-  messagingSenderId: '1007461661764',
-  appId: '1:1007461661764:web:7a2f80e07f36d1dc4a5011',
+const main = document.querySelector('#root');
+const init = async () => {
+  window.addEventListener('hashchange', async () => {
+    main.innerHTML = '';
+    switch (window.location.hash) {
+      case '#home':
+        main.appendChild(home());
+        break;
+      case '#login':
+        main.appendChild(login());
+        break;
+      case '#cadastro':
+        main.appendChild(cadastro());
+        break;
+      case '#login-google':
+        await signInWithGoogle();
+        break;
+      case '#login-facebook':
+        await signInWithFacebook();
+        break;
+      case '#feed': {
+        const userLoggedIn = await checkLoggedUser();
+        if (userLoggedIn) {
+          renderPosts();
+        } else {
+          alert('Realize o login');
+          window.location.hash = '#login';
+          main.appendChild(login());
+        }
+        break;
+      }
+      case '#perfil':
+        main.appendChild(perfil());
+        break;
+      case '#editarPerfil':
+        main.appendChild(editarPerfil());
+        break;
+      default:
+        main.appendChild(home());
+        break;
+    }
+  });
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+window.addEventListener('load', async () => {
+  const userLoggedIn = await checkLoggedUser();
+  if (userLoggedIn) {
+    main.appendChild(feed());
+  } else {
+    window.location.hash = '#home';
+    main.appendChild(home());
+  }
+  init();
+});
 
-const email = 'ladiesonthego@gmail.com';
-const password = 'ladie123';
-createUserWithEmailAndPassword(auth, email, password);
+export const navigate = (hash) => {
+  window.location.hash = hash;
+};
 
-myFunction();
