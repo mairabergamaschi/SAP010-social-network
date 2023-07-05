@@ -1,9 +1,9 @@
-import home from './Pages/Home/home.js';
-import login from './Pages/Login/login.js';
-import cadastro from './Pages/Cadastro/cadastro.js';
-import feed from './Pages/Feed/feed.js';
-import perfil from './Pages/Perfil/perfil.js';
-import editarPerfil from './Pages/Editar/editar.js';
+import home from './pages/Home/home.js';
+import login from './pages/Login/login.js';
+import cadastro from './pages/Cadastro/cadastro.js';
+import feed from './pages/Feed/feed.js';
+import perfil from './pages/Perfil/perfil.js';
+import editarPerfil from './pages/Editar/editar.js';
 import { signInWithGoogle, signInWithFacebook, checkLoggedUser } from './firebase/auth.js';
 
 const main = document.querySelector('#root');
