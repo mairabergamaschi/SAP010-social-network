@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, FacebookAuthProvider, updateProfile } from 'firebase/auth';
-import { app } from './app.js';
+import { app } from './firebase.js';
 
 // Inicialize o módulo de autenticação do Firebase
 const auth = getAuth(app);
