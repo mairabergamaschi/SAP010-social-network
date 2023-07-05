@@ -1,11 +1,10 @@
-import home from './Pages/Home/home.js'
-import login from './pages/Login/login.js';
+import home from './Pages/Home/home.js';
+import login from './Pages/Login/login.js';
 import cadastro from './Pages/Cadastro/cadastro.js';
 import feed from './Pages/Feed/feed.js';
 import perfil from './Pages/Perfil/perfil.js';
 import editarPerfil from './Pages/Editar/editar.js';
-import { signInWithGoogle, signInWithFacebook } from './firebase/auth.js';
-import { checkLoggedUser } from './firebase/auth.js';
+import { signInWithGoogle, signInWithFacebook, checkLoggedUser } from './firebase/auth.js';
 
 const main = document.querySelector('#root');
 const init = async () => {
@@ -30,10 +29,10 @@ const init = async () => {
       case '#feed': {
         const userLoggedIn = await checkLoggedUser();
         if (userLoggedIn) {
-          renderPosts();
+          main.appendChild(feed());
         } else {
-          alert('Realize o login');
-          window.location.hash = '#login';
+          // eslint-disable-next-line no-alert
+          alert('realize o login');
           main.appendChild(login());
         }
         break;
@@ -65,4 +64,3 @@ window.addEventListener('load', async () => {
 export const navigate = (hash) => {
   window.location.hash = hash;
 };
-
