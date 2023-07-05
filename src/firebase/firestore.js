@@ -1,4 +1,16 @@
-import { getFirestore, collection, addDoc, updateDoc, doc, deleteDoc, getDoc, query, where, orderBy, onSnapshot } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  updateDoc,
+  doc,
+  deleteDoc,
+  getDoc,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+} from 'firebase/firestore';
 import { app } from './firebase.js';
 
 const db = getFirestore(app);
@@ -45,13 +57,13 @@ export const addComment = async (postId, userId, comment) => {
 export const addLike = async (postId, userId) => {
   const postRef = doc(db, 'posts', postId);
   const likesRef = collection(postRef, 'likes');
-  
+
   // Verifica se o usuário já curtiu o post antes de adicionar uma nova curtida
   const likeQuery = await getDocs(likesRef.where('userId', '==', userId));
   if (likeQuery.empty) {
     // Adiciona uma nova curtida ao post
     await addDoc(likesRef, {
-      userId: userId,
+      userId,
       createdAt: new Date(),
     });
 
@@ -70,12 +82,12 @@ export const addLike = async (postId, userId) => {
 export const removeLike = async (postId, userId) => {
   const postRef = doc(db, 'posts', postId);
   const likesRef = collection(postRef, 'likes');
-  
+
   // Verifica se o usuário já curtiu o post antes de remover a curtida
   const likeQuery = await getDocs(likesRef.where('userId', '==', userId));
   if (!likeQuery.empty) {
     const likeDoc = likeQuery.docs[0];
-    
+
     // Remove o documento de curtida
     await deleteDoc(likeDoc.ref);
 
@@ -94,7 +106,7 @@ export const removeLike = async (postId, userId) => {
 export const hasLikedPost = async (postId, userId) => {
   const postRef = doc(db, 'posts', postId);
   const likesRef = collection(postRef, 'likes');
-  
+
   const likeQuery = await getDocs(likesRef.where('userId', '==', userId));
   return !likeQuery.empty;
 };
