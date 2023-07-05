@@ -48,7 +48,7 @@ const init = async () => {
 };
 
 window.addEventListener('load', async () => {
-  const userLoggedIn = await checkLoggedUser();
+  const userLoggedIn = checkLoggedUser();
   if (userLoggedIn) {
     window.location.hash = '#feed';
   } else {
@@ -58,6 +58,6 @@ window.addEventListener('load', async () => {
   init();
 });
 
-export const navigate = (hash) => {
-  window.location.hash = hash;
+export const navigate = (path) => {
+  window.location.hash = path;
 };

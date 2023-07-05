@@ -1,5 +1,6 @@
 import { getPosts, createPost, addComment, addLike, removeLike, hasLikedPost, deletePost, editPost } from '../../firebase/firestore.js';
-import { checkLoggedUser } from '../../firebase/auth.js';
+import { checkLoggedUser, logout } from '../../firebase/auth.js';
+import { navigate } from '../../main.js';
 
 export default () => {
   const container = document.createElement('div');
@@ -22,6 +23,8 @@ export default () => {
       <h2>Timeline</h2>
       <div id="posts-container"></div>
     </section>
+
+    <button id="logout-button">Logout</button>
   `;
 
   container.innerHTML = feed;
@@ -156,6 +159,14 @@ export default () => {
         });
     }
   });
+
+  const logoutButton = container.querySelector('#logout-button');
+logoutButton.addEventListener('click', () => {
+  logout();
+  navigate('');
+});
+
+
 
   return container;
 };
