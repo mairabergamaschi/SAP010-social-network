@@ -1,4 +1,4 @@
-import { loginWithEmail, signInWithGoogle, signInWithFacebook } from '../../firebase/auth.js';
+import { signIn, signInWithGoogle, signInWithFacebook } from '../../firebase/auth.js';
 
 export default () => {
   const container = document.createElement('div');
@@ -13,7 +13,7 @@ export default () => {
         <label for="password">Senha:</label>
         <input type="password" id="password" name="password" required></input>
 
-        <button type="submit">Entrar</button>
+        <button id="signIn" type="submit">Entrar</button>
       </form>
 
       <div class="links">
@@ -31,13 +31,17 @@ export default () => {
   container.innerHTML = loginForm;
 
   const form = container.querySelector('form');
+  const usernameInput = container.querySelector('#username');
+  const passwordInput = container.querySelector('#password');
+  const signInButton = container.querySelector('#signIn');
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const username = form.querySelector('#username').value;
-    const password = form.querySelector('#password').value;
+    const username = usernameInput.value;
+    const password = passwordInput.value;
 
     // Lógica de login com email e senha utilizando o Firebase
-    loginWithEmail(username, password)
+    signIn(username, password)
       .then(() => {
         // Login bem-sucedido
         console.log('Usuário logado com email e senha');
@@ -50,6 +54,10 @@ export default () => {
         // Exibir mensagem de erro ao usuário
         alert('Erro ao fazer login. Verifique suas credenciais e tente novamente.');
       });
+  });
+
+  signInButton.addEventListener('click', () => {
+    form.dispatchEvent(new Event('submit'));
   });
 
   const googleLoginButton = container.querySelector('.google-login');
@@ -66,4 +74,5 @@ export default () => {
 
   return container;
 };
+
 

@@ -1,7 +1,28 @@
-import { getFirestore, collection, addDoc, updateDoc, doc, deleteDoc, getDoc, query, where, orderBy, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, updateDoc, doc, deleteDoc, getDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { app } from './firebase.js';
 
 const db = getFirestore(app);
+
+// Função para adicionar um novo usuário ao banco de dados
+const addUser = async (user) => {
+  try {
+    // Crie um documento para o novo usuário na coleção "usuarios"
+    await addDoc(collection(db, "usuarios"), user);
+    console.log("Usuário adicionado ao banco de dados:", user);
+  } catch (error) {
+    console.log("Erro ao adicionar usuário ao banco de dados:", error);
+  }
+};
+
+// Após o cadastro do usuário
+const user = {
+  nome: "Nome do usuário",
+  email: "email@example.com",
+  // Outras informações do usuário
+};
+
+// Chame a função para adicionar o usuário ao banco de dados
+addUser(user);
 
 // Função para criar um novo post
 export const createPost = async (userId, content) => {
@@ -129,7 +150,7 @@ export const getPosts = async () => {
   const q = query(postsRef, orderBy('createdAt', 'desc'));
 
   // Obtém os documentos dos posts
-  const querySnapshot = await getDocs(q);
+  const querySnapshot = await getDoc(q);
   const posts = [];
   for (const doc of querySnapshot.docs) {
     const post = doc.data();

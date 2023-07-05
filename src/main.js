@@ -8,8 +8,9 @@ import { signInWithGoogle, signInWithFacebook, checkLoggedUser } from './firebas
 
 const main = document.querySelector('#root');
 const init = async () => {
-  window.addEventListener('hashchange', async () => {
+  const renderPage = async () => {
     main.innerHTML = '';
+
     switch (window.location.hash) {
       case '#home':
         main.appendChild(home());
@@ -27,14 +28,7 @@ const init = async () => {
         await signInWithFacebook();
         break;
       case '#feed': {
-        const userLoggedIn = await checkLoggedUser();
-        if (userLoggedIn) {
-          main.appendChild(feed());
-        } else {
-          // eslint-disable-next-line no-alert
-          alert('realize o login');
-          main.appendChild(login());
-        }
+        main.appendChild(feed());
         break;
       }
       case '#perfil':
@@ -47,17 +41,20 @@ const init = async () => {
         main.appendChild(home());
         break;
     }
-  });
+  };
+
+  window.addEventListener('hashchange', renderPage);
+  await renderPage();
 };
 
 window.addEventListener('load', async () => {
   const userLoggedIn = await checkLoggedUser();
   if (userLoggedIn) {
-    main.appendChild(feed());
+    window.location.hash = '#feed';
   } else {
     window.location.hash = '#home';
-    main.appendChild(home());
   }
+
   init();
 });
 

@@ -1,3 +1,6 @@
+import { getPosts, createPost, addComment, addLike, removeLike, hasLikedPost, deletePost, editPost } from '../../firebase/firestore.js';
+import { checkLoggedUser } from '../../firebase/auth.js';
+
 export default () => {
   const container = document.createElement('div');
 
@@ -23,10 +26,12 @@ export default () => {
 
   container.innerHTML = feed;
 
-  // Função para renderizar os posts na timeline
-  const renderPosts = (posts) => {
-    const postsContainer = document.getElementById('posts-container');
+  const postsContainer = container.querySelector('#posts-container');
 
+  const renderPosts = async () => {
+    postsContainer.innerHTML = '';
+
+    const posts = await getPosts();
     posts.forEach((post) => {
       const postElement = document.createElement('div');
       postElement.classList.add('post');
@@ -41,28 +46,117 @@ export default () => {
         <div class="post-actions">
           <button class="like-button">Curtir</button>
           <button class="comment-button">Comentar</button>
+          ${userLoggedIn && post.userId === userLoggedIn.userId ? `
+            <button class="delete-button">Excluir</button>
+            <button class="edit-button">Editar</button>
+          ` : ''}
         </div>
       `;
+
+      const likeButton = postElement.querySelector('.like-button');
+
+      // Verifique se o usuário logado já curtiu o post
+      const userLoggedIn = checkLoggedUser();
+      if (userLoggedIn && hasLikedPost(post.postId, userLoggedIn.uid)) {
+        likeButton.classList.add('liked');
+        likeButton.textContent = 'Remover Curtida';
+      }
+
+      likeButton.addEventListener('click', async () => {
+        if (userLoggedIn) {
+          if (likeButton.classList.contains('liked')) {
+            // Se o usuário já curtiu o post, remova a curtida
+            await removeLike(post.postId, userLoggedIn.uid);
+            likeButton.classList.remove('liked');
+            likeButton.textContent = 'Curtir';
+          } else {
+            // Se o usuário ainda não curtiu o post, adicione a curtida
+            await addLike(post.postId, userLoggedIn.uid);
+            likeButton.classList.add('liked');
+            likeButton.textContent = 'Remover Curtida';
+          }
+        } else {
+          alert('Realize o login para curtir um post.');
+          navigate('#login');
+        }
+      });
+
+      const commentButton = postElement.querySelector('.comment-button');
+      commentButton.addEventListener('click', () => {
+        const commentText = prompt('Digite seu comentário:');
+        if (commentText) {
+          addComment(post.postId, userLoggedIn.userId, commentText)
+            .then(() => {
+              alert('Comentário adicionado com sucesso');
+              renderPosts();
+            })
+            .catch((error) => {
+              console.log('Erro ao adicionar comentário:', error);
+              alert('Erro ao adicionar comentário. Tente novamente mais tarde.');
+            });
+        }
+      });
+
+      const deleteButton = postElement.querySelector('.delete-button');
+      if (deleteButton) {
+        deleteButton.addEventListener('click', () => {
+          if (confirm('Tem certeza de que deseja excluir este post?')) {
+            deletePost(post.postId)
+              .then(() => {
+                alert('Post excluído com sucesso');
+                renderPosts();
+              })
+              .catch((error) => {
+                console.log('Erro ao excluir o post:', error);
+                alert('Erro ao excluir o post. Tente novamente mais tarde.');
+              });
+          }
+        });
+      }
+
+      const editButton = postElement.querySelector('.edit-button');
+      if (editButton) {
+        editButton.addEventListener('click', () => {
+          const newContent = prompt('Digite o novo conteúdo do post:', post.content);
+          if (newContent) {
+            editPost(post.postId, newContent)
+              .then(() => {
+                alert('Post editado com sucesso');
+                renderPosts();
+              })
+              .catch((error) => {
+                console.log('Erro ao editar o post:', error);
+                alert('Erro ao editar o post. Tente novamente mais tarde.');
+              });
+          }
+        });
+      }
 
       postsContainer.appendChild(postElement);
     });
   };
 
-  // Exemplo de posts para teste
-  const posts = [
-    {
-      userName: 'Nome do Usuário 1',
-      userProfilePhoto: 'user-avatar-1.jpg',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus sem non dapibus facilisis.',
-    },
-    {
-      userName: 'Nome do Usuário 2',
-      userProfilePhoto: 'user-avatar-2.jpg',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus sem non dapibus facilisis.',
-    },
-  ];
+  renderPosts();
 
-  renderPosts(posts);
+  const postForm = container.querySelector('#post');
+  const userLoggedIn = checkLoggedUser();
+  postForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const postText = postForm.querySelector('#post-text').value;
+    if (postText) {
+      createPost(userLoggedIn.userId, postText)
+        .then(() => {
+          alert('Post criado com sucesso');
+          postForm.reset();
+          renderPosts();
+        })
+        .catch((error) => {
+          console.log('Erro ao criar o post:', error);
+          alert('Erro ao criar o post. Tente novamente mais tarde.');
+        });
+    }
+  });
 
   return container;
 };
+
