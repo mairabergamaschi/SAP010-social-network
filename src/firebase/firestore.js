@@ -1,28 +1,7 @@
-import { getFirestore, collection, addDoc, updateDoc, doc, deleteDoc, getDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, updateDoc, doc, deleteDoc, getDocs, query, orderBy} from 'firebase/firestore';
 import { app } from './firebase.js';
 
 const db = getFirestore(app);
-
-// Função para adicionar um novo usuário ao banco de dados
-const addUser = async (user) => {
-  try {
-    // Crie um documento para o novo usuário na coleção "usuarios"
-    await addDoc(collection(db, "usuarios"), user);
-    console.log("Usuário adicionado ao banco de dados:", user);
-  } catch (error) {
-    console.log("Erro ao adicionar usuário ao banco de dados:", error);
-  }
-};
-
-// Após o cadastro do usuário
-const user = {
-  nome: "Nome do usuário",
-  email: "email@example.com",
-  // Outras informações do usuário
-};
-
-// Chame a função para adicionar o usuário ao banco de dados
-addUser(user);
 
 // Função para criar um novo post
 export const createPost = async (userId, content) => {
@@ -46,7 +25,7 @@ export const createPost = async (userId, content) => {
 export const addComment = async (postId, userId, comment) => {
   try {
     const postRef = doc(db, 'posts', postId);
-    const postSnap = await getDoc(postRef);
+    const postSnap = await getDocs(postRef);
 
     if (postSnap.exists()) {
       const post = postSnap.data();
@@ -77,7 +56,7 @@ export const addLike = async (postId, userId) => {
     });
 
     // Atualiza o contador de curtidas no post
-    const postDoc = await getDoc(postRef);
+    const postDoc = await getDocs(postRef);
     if (postDoc.exists()) {
       const likesCount = postDoc.data().likesCount || 0;
       await updateDoc(postRef, {
@@ -101,7 +80,7 @@ export const removeLike = async (postId, userId) => {
     await deleteDoc(likeDoc.ref);
 
     // Atualiza o contador de curtidas no post
-    const postDoc = await getDoc(postRef);
+    const postDoc = await getDocs(postRef);
     if (postDoc.exists()) {
       const likesCount = postDoc.data().likesCount || 0;
       await updateDoc(postRef, {
@@ -150,18 +129,18 @@ export const getPosts = async () => {
   const q = query(postsRef, orderBy('createdAt', 'desc'));
 
   // Obtém os documentos dos posts
-  const querySnapshot = await getDoc(q);
+  const querySnapshot = await getDocs(q);
   const posts = [];
   for (const doc of querySnapshot.docs) {
     const post = doc.data();
 
     // Obtém os detalhes do usuário
-    const userSnapshot = await doc.ref.parent.parent.get();
-    const user = userSnapshot.data();
+    const userSnapshot = await getDocs(doc.ref.parent.parent);
+    const user = userSnapshot.docs[0].data();
 
     // Adiciona os detalhes do usuário ao post
     post.userId = user.userId;
-    post.userName = user.name;
+    post.userName = user.username;
     post.userProfilePhoto = user.profilePhoto;
 
     posts.push(post);

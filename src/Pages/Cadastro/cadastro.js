@@ -33,37 +33,28 @@ export default () => {
   container.innerHTML = cadastro;
 
   const form = container.querySelector('form');
-  const nameInput = container.querySelector('#name');
-  const emailInput = container.querySelector('#email');
-  const passwordInput = container.querySelector('#password');
-  const confirmPasswordInput = container.querySelector('#confirm-password');
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const name = nameInput.value;
-    const email = emailInput.value;
-    const password = passwordInput.value;
-    const confirmPassword = confirmPasswordInput.value;
+    const username = document.querySelector('#name');
+    const email = document.querySelector('#email');
+    const password = document.querySelector('#password');
+    const confirmPassword = document.querySelector('#confirm-password');
 
     if (password !== confirmPassword) {
       alert('As senhas não coincidem. Por favor, tente novamente.');
       return;
     }
 
-    // Lógica de cadastro com email e senha utilizando o Firebase
-    signUp(name, email, password)
-      .then(() => {
-        // Cadastro bem-sucedido
+    try{
+    await signUp(username, email, password)
         console.log('Usuário cadastrado com sucesso');
-        // Redirecionar para a página desejada
         window.location.hash = '#feed';
-      })
-      .catch((error) => {
-        // Ocorreu um erro no cadastro
+      }
+      catch (error) {
         console.log('Erro de cadastro:', error);
-        // Exibir mensagem de erro ao usuário
         alert('Erro ao fazer cadastro. Verifique os dados informados e tente novamente.');
-      });
+      }
   });
 
   const googleLoginButton = container.querySelector('.google-login');
