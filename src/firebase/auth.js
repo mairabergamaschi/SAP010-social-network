@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithRedirect,
+  getRedirectResult,
   GoogleAuthProvider,
   FacebookAuthProvider,
   updateProfile,
@@ -15,65 +16,87 @@ import { app } from './firebase.js';
 const auth = getAuth(app);
 
 // criar usuário com email e senha
-export const signUp = (email, password) => createUserWithEmailAndPassword(auth, email, password);
-// criar promessa e callback caso o cadastro dê erro, e o updatProfile
+export const signUp = async (username, email, password) => {
+  try {
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+    // Atualizar o perfil do usuário com o displayName
+    await updateProfile(user, { displayName: username });
+
+    // Adicionar o usuário ao banco de dados
+    await addDoc(collection(db, 'usuarios'), {
+      userId: user.uid,
+      username: user.displayName,
+      email: user.email
+      // Outras informações do usuário
+    });
+
+    console.log('Usuário cadastrado com sucesso:', user);
+    return user;
+  } catch (error) {
+    console.log('Erro ao cadastrar usuário:', error);
+    throw error;
+  }
+};
 
 // usuário entra com email e senha
-export const signIn = (email, password) => signInWithEmailAndPassword(auth, email, password);
-// callback e promessa, ir para o feed
+export const signIn = async (email, password) => {
+  try {
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
+    console.log('Usuário autenticado com sucesso:', user);
+    return user;
+  } catch (error) {
+    console.log('Erro ao autenticar usuário:', error);
+    throw error;
+  }
+};
 
-// entrar e cadastrar com google - verificar se está funcionando quando arrumar a pagina de login
+// entrar e cadastrar com google - verificar se está funcionando quando arrumar a página de login
 export const signInWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
-  return signInWithRedirect(auth, provider)
-    .then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      console.log(token);
-      const user = result.user;
-      if (credential) {
-        if (user) {
-          console.log('novo usuário criado');
-        } else {
-          console.log('usuário existente');
-        }
-      }
-      console.log('Usuário logado:', user);
-      // Redirecionar para a página desejada
-      window.location.hash = '#feed';
-    })
-    .catch((error) => {
-      console.log('Erro de login com o Google:', error);
-      console.log('Erro ao fazer login com o Google. Verifique suas credenciais e tente novamente.');
-    });
+  try {
+    await signInWithRedirect(auth, provider);
+    // Redirecionar para a página desejada
+    window.location.hash = '#feed';
+  } catch (error) {
+    console.log('Erro de login com o Google:', error);
+    console.log('Erro ao fazer login com o Google. Verifique suas credenciais e tente novamente.');
+  }
 };
-
-// entrar e cadastrar com o facebook - verificar se está funcionando quando arrumar a page login
+   
+// entrar e cadastrar com o facebook - verificar se está funcionando quando arrumar a página de login
 export const signInWithFacebook = async () => {
   const provider = new FacebookAuthProvider();
-  return signInWithRedirect(auth, provider)
-    .then((result) => {
-      const credential = FacebookAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      console.log(token);
-      const user = result.user;
-      if (credential) {
-        if (user) {
-          console.log('novo usuário criado');
-        } else {
-          console.log('usuário existente');
-        }
-      }
-      console.log('Usuário logado:', user);
-      // Redirecionar para a página desejada
-      window.location.hash = '#feed';
-    })
-    .catch((error) => {
-      console.log('Erro de login com o Facebook:', error);
-      console.log('Erro ao fazer login com o Facebook. Verifique suas credenciais e tente novamente.');
-    });
+  try {
+    await signInWithRedirect(auth, provider);
+    // Redirecionar para a página desejada
+    window.location.hash = '#feed';
+  } catch (error) {
+    console.log('Erro de login com o Google:', error);
+    console.log('Erro ao fazer login com o Google. Verifique suas credenciais e tente novamente.');
+  }
 };
 
+// Callback para tratar o retorno após o redirecionamento do Google
+export const handleGoogleRedirectResult = async () => {
+  try {
+    const result = await getRedirectResult(auth);
+    const user = result.user;
+    if (user) {
+      // Adicionar o usuário ao banco de dados
+      const userData = {
+        userId: user.uid,
+        username: user.displayName,
+        email: user.email,
+        profilePhoto: user.photoURL,
+      };
+      await addUser(userData);
+      console.log('Usuário adicionado ao banco de dados:', userData);
+    }
+  } catch (error) {
+    console.log('Erro ao tratar o resultado do redirecionamento do Google:', error);
+  }
+};
 // Função para realizar o logout
 export const logout = () => signOut(auth);
 

@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 import {
   getPosts, createPost, addComment, addLike, removeLike, hasLikedPost, deletePost, editPost,
 } from '../../firebase/firestore.js';
 import { checkLoggedUser, logout } from '../../firebase/auth.js';
+=======
+import { getPosts, createPost, addComment, addLike, removeLike, hasLikedPost, deletePost, editPost } from '../../firebase/firestore.js';
+import { checkLoggedUser, logout, handleGoogleRedirectResult } from '../../firebase/auth.js';
+>>>>>>> 06e3fa76270e102d1f042212019f3b737f5c7736
 import { navigate } from '../../main.js';
 
 export default () => {
@@ -31,13 +36,16 @@ export default () => {
 
   container.innerHTML = feed;
 
+  handleGoogleRedirectResult();
+
   const postsContainer = container.querySelector('#posts-container');
 
   const renderPosts = async () => {
     postsContainer.innerHTML = '';
 
     const posts = await getPosts();
-    posts.forEach((post) => {
+    const userLoggedIn = await checkLoggedUser();
+    for (const post of posts) {
       const postElement = document.createElement('div');
       postElement.classList.add('post');
       postElement.innerHTML = `
@@ -51,7 +59,7 @@ export default () => {
         <div class="post-actions">
           <button class="like-button">Curtir</button>
           <button class="comment-button">Comentar</button>
-          ${userLoggedIn && post.userId === userLoggedIn.userId ? `
+          ${userLoggedIn && post.userId === userLoggedIn.uid ? `
             <button class="delete-button">Excluir</button>
             <button class="edit-button">Editar</button>
           ` : ''}
@@ -61,7 +69,6 @@ export default () => {
       const likeButton = postElement.querySelector('.like-button');
 
       // Verifique se o usuário logado já curtiu o post
-      const userLoggedIn = checkLoggedUser();
       if (userLoggedIn && hasLikedPost(post.postId, userLoggedIn.uid)) {
         likeButton.classList.add('liked');
         likeButton.textContent = 'Remover Curtida';
@@ -138,7 +145,7 @@ export default () => {
       }
 
       postsContainer.appendChild(postElement);
-    });
+    };
   };
 
   renderPosts();
@@ -148,8 +155,8 @@ export default () => {
   postForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const postText = postForm.querySelector('#post-text').value;
-    if (postText) {
-      createPost(userLoggedIn.userId, postText)
+    if (postText && userLoggedIn) {
+      createPost(userLoggedIn.uid, postText)
         .then(() => {
           alert('Post criado com sucesso');
           postForm.reset();
@@ -165,8 +172,15 @@ export default () => {
   const logoutButton = container.querySelector('#logout-button');
   logoutButton.addEventListener('click', () => {
     logout();
+<<<<<<< HEAD
     navigate('');
   });
+=======
+    navigate('#login');
+  });
+
+
+>>>>>>> 06e3fa76270e102d1f042212019f3b737f5c7736
 
   return container;
 };
