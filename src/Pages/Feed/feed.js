@@ -1,4 +1,6 @@
-import { getPosts, createPost, addComment, addLike, removeLike, hasLikedPost, deletePost, editPost } from '../../firebase/firestore.js';
+import {
+  getPosts, createPost, addComment, addLike, removeLike, hasLikedPost, deletePost, editPost,
+} from '../../firebase/firestore.js';
 import { checkLoggedUser, logout } from '../../firebase/auth.js';
 import { navigate } from '../../main.js';
 
@@ -161,13 +163,10 @@ export default () => {
   });
 
   const logoutButton = container.querySelector('#logout-button');
-logoutButton.addEventListener('click', () => {
-  logout();
-  navigate('');
-});
-
-
+  logoutButton.addEventListener('click', () => {
+    logout();
+    navigate('');
+  });
 
   return container;
 };
-
