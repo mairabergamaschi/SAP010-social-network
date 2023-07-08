@@ -1,0 +1,31 @@
+:root {
+    --blue: #30a2ff;
+    --darkblue: #394775F0;
+    --lightblue: #008abd;
+    --white: #F7FFF6;
+    --black: #000000;
+    --green: #00887F;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  
+  body {
+    color: var(--black);
+    font-family: "Inter", cursive;
+    text-align: center;
+    justify-content: center;
+    background-image: linear-gradient(var(--darkblue), 20%, var(--blue), var(--green));
+    background-repeat: no-repeat;
+    }
+  
+  main {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    min-height: 100vh;
+  }

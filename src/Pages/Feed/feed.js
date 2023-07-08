@@ -1,173 +1,182 @@
-import { getPosts, createPost, addComment, addLike, removeLike, hasLikedPost, deletePost, editPost } from '../../firebase/firestore.js';
-import { checkLoggedUser, logout } from '../../firebase/auth.js';
-import { navigate } from '../../main.js';
+import {
+  createPost,
+  accessPost,
+  updatePost,
+  likePost,
+  deletePost,
+} from '../../firebase/firestore';
+import { getUserName, getUserId, logout } from '../../firebase/auth';
+import homeicon from '../../images/iconHome.png';
+import exiticon from '../../images/iconExit.png';
+import likeicon from '../../images/iconLike.png';
+import editicon from '../../images/iconEdit.png';
+import deleteicon from '../../images/iconDelete.png';
 
 export default () => {
   const container = document.createElement('div');
-
   const feed = `
-    <section class="search-box">
-      <input type="text" id="search-input" placeholder="Pesquisar por destino ou palavra-chave">
-      <button id="search-button">Buscar</button>
-    </section>
+  <div class='container'>
+    <div class='left-timeline'>
 
-    <section class="post-box">
-      <h2>Postagens Recentes</h2>
-      <form id="post" name="post">
-        <textarea id="post-text" name="post-text" placeholder="Digite sua postagem..."></textarea>
-        <button type="submit">Postar</button>
-      </form>
-    </section>
-
-    <section class="timeline">
-      <h2>Timeline</h2>
-      <div id="posts-container"></div>
-    </section>
-
-    <button id="logout-button">Logout</button>
+      <p class='postTitle'>Olá ${getUserName()}, bem-vindo(a) de volta!</p>
+      <figure class='icones'>
+        <button type='button' class='button-timeline' id='home-btn'><img src='${homeicon}' class='icon-timeline' alt='Icone home'></button>
+        <button type='button' class='button-timeline' id='logout-btn'><img src='${exiticon}' class='icon-timeline' alt='logout icon'></button>
+      </figure>
+    </div>
+    <div class='right-timeline'>
+      <div class='input-container'>
+        <textarea class='input-message' id='postArea' placeholder='Compartilhe...'></textarea>
+        <button class='shareBtn' id='sharePost'>COMPARTILHAR</button>
+      </div>
+      <div id='postList'></div>
+    </div>
+  </div>
   `;
 
   container.innerHTML = feed;
 
-  const postsContainer = container.querySelector('#posts-container');
+  const postBtn = container.querySelector('#sharePost');
+  const descriptionPost = container.querySelector('#postArea');
+  const postList = container.querySelector('#postList');
+  const logOutBtn = container.querySelector('#logout-btn');
 
-  const renderPosts = async () => {
-    postsContainer.innerHTML = '';
-
-    const posts = await getPosts();
-    posts.forEach((post) => {
-      const postElement = document.createElement('div');
-      postElement.classList.add('post');
-      postElement.innerHTML = `
-        <div class="post-header">
-          <img src="${post.userProfilePhoto}" alt="${post.userName}">
-          <h3>${post.userName}</h3>
+  const createPostElement = (
+    name,
+    description,
+    postId,
+    authorId,
+    whoLiked,
+  ) => {
+    const postElement = document.createElement('div');
+    postElement.innerHTML = `
+      <div class='post-container'>
+        <div class='nameUser'>
+          <p class='userName'>${name}</p>
         </div>
-        <div class="post-content">
-          <p>${post.content}</p>
+        <p class='textPost'>${description}</p>
+          <div class='image-icons'>
+            <button type='button' class='icons-post' id='like-Post' data-post-id='${postId}'>
+              <a class='icons-post' id='icons-post'><img src='${likeicon}' alt='like image' class='icons-post'></a>
+              <span class='likePost' id='likes-counter-${postId}'>${whoLiked.length}</span>
+            </button>
+            
+          ${authorId === getUserId() ? `<button type='button' data-post-id='${postId}' class='icons-post' id='editPost'>
+            <a class='icons-post'><img src='${editicon}' alt='edit image' class='icons-post'></a>
+          </button>
+          <button type='button' class='icons-post' id='btn-delete' data-post-id='${postId}'>
+            <img src='${deleteicon}' alt='delete image' class='icons-post'>
+          </button>` : ''}
         </div>
-        <div class="post-actions">
-          <button class="like-button">Curtir</button>
-          <button class="comment-button">Comentar</button>
-          ${userLoggedIn && post.userId === userLoggedIn.userId ? `
-            <button class="delete-button">Excluir</button>
-            <button class="edit-button">Editar</button>
-          ` : ''}
-        </div>
-      `;
+      </div>
+`;
 
-      const likeButton = postElement.querySelector('.like-button');
+    return postElement;
+  };
 
-      // Verifique se o usuário logado já curtiu o post
-      const userLoggedIn = checkLoggedUser();
-      if (userLoggedIn && hasLikedPost(post.postId, userLoggedIn.uid)) {
-        likeButton.classList.add('liked');
-        likeButton.textContent = 'Remover Curtida';
-      }
+  const updateListPost = (TodosPosts) => {
+    postList.innerHTML = '';
+    TodosPosts.forEach(async (post) => {
+      const {
+        name, description, id, author, whoLiked,
+      } = post;
+      const postElement = createPostElement(
+        name,
+        description,
+        id,
+        author,
+        whoLiked,
+      );
+      postList.appendChild(postElement);
 
+      const likeButton = postElement.querySelector('#like-Post');
+      const postId = likeButton.getAttribute('data-post-id');
+      const likesCounter = postElement.querySelector(`#likes-counter-${postId}`);
       likeButton.addEventListener('click', async () => {
-        if (userLoggedIn) {
-          if (likeButton.classList.contains('liked')) {
-            // Se o usuário já curtiu o post, remova a curtida
-            await removeLike(post.postId, userLoggedIn.uid);
-            likeButton.classList.remove('liked');
-            likeButton.textContent = 'Curtir';
+        try {
+          const likeLike = await likePost(postId, getUserId());
+          let currentLikes = parseInt(likesCounter.innerText, 10);
+          if (likeLike === 'add like') {
+            currentLikes += 1;
           } else {
-            // Se o usuário ainda não curtiu o post, adicione a curtida
-            await addLike(post.postId, userLoggedIn.uid);
-            likeButton.classList.add('liked');
-            likeButton.textContent = 'Remover Curtida';
+            currentLikes -= 1;
           }
-        } else {
-          alert('Realize o login para curtir um post.');
-          navigate('#login');
+          likesCounter.innerText = currentLikes;
+        } catch (error) {
+          console.error('Error ao dar like:', error);
         }
       });
-
-      const commentButton = postElement.querySelector('.comment-button');
-      commentButton.addEventListener('click', () => {
-        const commentText = prompt('Digite seu comentário:');
-        if (commentText) {
-          addComment(post.postId, userLoggedIn.userId, commentText)
-            .then(() => {
-              alert('Comentário adicionado com sucesso');
-              renderPosts();
-            })
-            .catch((error) => {
-              console.log('Erro ao adicionar comentário:', error);
-              alert('Erro ao adicionar comentário. Tente novamente mais tarde.');
-            });
-        }
-      });
-
-      const deleteButton = postElement.querySelector('.delete-button');
-      if (deleteButton) {
-        deleteButton.addEventListener('click', () => {
-          if (confirm('Tem certeza de que deseja excluir este post?')) {
-            deletePost(post.postId)
-              .then(() => {
-                alert('Post excluído com sucesso');
-                renderPosts();
-              })
-              .catch((error) => {
-                console.log('Erro ao excluir o post:', error);
-                alert('Erro ao excluir o post. Tente novamente mais tarde.');
-              });
-          }
-        });
-      }
-
-      const editButton = postElement.querySelector('.edit-button');
-      if (editButton) {
-        editButton.addEventListener('click', () => {
-          const newContent = prompt('Digite o novo conteúdo do post:', post.content);
-          if (newContent) {
-            editPost(post.postId, newContent)
-              .then(() => {
-                alert('Post editado com sucesso');
-                renderPosts();
-              })
-              .catch((error) => {
-                console.log('Erro ao editar o post:', error);
-                alert('Erro ao editar o post. Tente novamente mais tarde.');
-              });
-          }
-        });
-      }
-
-      postsContainer.appendChild(postElement);
     });
   };
 
-  renderPosts();
+  const loadPosts = async () => {
+    accessPost(updateListPost);
+  };
 
-  const postForm = container.querySelector('#post');
-  const userLoggedIn = checkLoggedUser();
-  postForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const postText = postForm.querySelector('#post-text').value;
-    if (postText) {
-      createPost(userLoggedIn.userId, postText)
+  const handlePostBtnClick = () => {
+    const description = descriptionPost.value;
+
+    if (!description) {
+      alert('Preencha o campo');
+    } else {
+      createPost(description)
         .then(() => {
-          alert('Post criado com sucesso');
-          postForm.reset();
-          renderPosts();
+          descriptionPost.value = '';
+          alert('Publicação efetuada com sucesso!');
         })
-        .catch((error) => {
-          console.log('Erro ao criar o post:', error);
-          alert('Erro ao criar o post. Tente novamente mais tarde.');
+        .catch(() => {
+          alert('Ocorreu um erro ao criar o post. Por favor, tente novamente mais tarde');
         });
     }
+  };
+
+  const handlePostListClick = (event) => {
+    const target = event.target;
+    const deleteButton = target.closest('#btn-delete');
+    const editButton = target.closest('#editPost');
+    if (deleteButton) {
+      const postId = deleteButton.getAttribute('data-post-id');
+      if (window.confirm('Tem certeza de que deseja excluir a publicação?')) {
+        deletePost(postId)
+          .then(() => {
+            target.closest('.post-container').remove();
+            alert('Publicação excluída com sucesso!');
+          })
+          .catch((error) => {
+            alert('Ocorreu um erro ao excluir o post. Por favor, tente novamente mais tarde', error);
+          });
+      }
+    } else if (editButton) {
+      const postId = editButton.getAttribute('data-post-id');
+      const postElement = editButton.closest('.post-container');
+      const textPostElement = postElement.querySelector('.textPost');
+      const newText = prompt('Edite a sua postagem:', textPostElement.textContent);
+      if (newText && newText.trim() !== '') {
+        updatePost(postId, { description: newText })
+          .then(() => {
+            textPostElement.textContent = newText;
+            alert('Post atualizado com sucesso!');
+          })
+          .catch(() => {
+            alert('Ocorreu um erro ao editar o post. Por favor, tente novamente mais tarde');
+          });
+      }
+    }
+  };
+
+  postBtn.addEventListener('click', handlePostBtnClick);
+  postList.addEventListener('click', handlePostListClick);
+
+  logOutBtn.addEventListener('click', () => {
+    logout()
+      .then(() => {
+        window.location.hash = '#login';
+      })
+      .catch(() => {
+        alert('Ocorreu um erro, tente novamente.');
+      });
   });
 
-  const logoutButton = container.querySelector('#logout-button');
-logoutButton.addEventListener('click', () => {
-  logout();
-  navigate('');
-});
-
-
-
+  loadPosts();
   return container;
 };
-

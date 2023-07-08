@@ -1,0 +1,26 @@
+
+.icon-timeline {
+    text-align: center;
+    color: var(--white); 
+    width: 1.5em;   
+}
+
+.icones {
+    display: flex;
+    justify-content: space-between;
+}
+a {
+    text-decoration: none;
+}
+
+.icons-post {
+    background-color: var(--lightblue);
+    border: none;
+    width: 1.5em;
+}
+
+.icon-timeline:hover {
+    background-color: var(--blue);
+    border-radius: 0.8em;
+}
+
