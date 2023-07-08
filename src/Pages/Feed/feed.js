@@ -40,6 +40,7 @@ export default () => {
   const descriptionPost = container.querySelector('#postArea');
   const postList = container.querySelector('#postList');
   const logOutBtn = container.querySelector('#logout-btn');
+  const homeBtn = container.querySelector('#home-btn');
 
   const createPostElement = (
     name,
@@ -110,7 +111,7 @@ export default () => {
   };
 
   const loadPosts = async () => {
-    accessPost(updateListPost);
+    await accessPost(updateListPost);
   };
 
   const handlePostBtnClick = () => {
@@ -166,6 +167,16 @@ export default () => {
 
   postBtn.addEventListener('click', handlePostBtnClick);
   postList.addEventListener('click', handlePostListClick);
+
+  homeBtn.addEventListener('click', () => {
+    logout() // colocar para ir pro home
+      .then(() => {
+        window.location.hash = '#home';
+      })
+      .catch(() => {
+        alert('Ocorreu um erro, tente novamente.');
+      });
+  });
 
   logOutBtn.addEventListener('click', () => {
     logout()
