@@ -4,6 +4,7 @@ import {
   loginGoogle,
   loginFacebook,
 } from '../../firebase/auth.js';
+import { errorsFirebase } from '../../validations.js';
 import logologin from '../../images/logologin.png';
 import icongoogle from '../../images/iconGoogle.png';
 import iconfacebook from '../../images/iconFacebook.png';

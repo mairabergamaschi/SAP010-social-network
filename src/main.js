@@ -1,6 +1,7 @@
 import login from './pages/login/login.js';
 import register from './pages/Cadastro/cadastro.js';
 import timeline from './pages/Feed/feed.js';
+import home from './pages/Home/home.js';
 import perfil from './pages/Perfil/perfil.js';
 import editarPerfil from './pages/Editar/editar.js';
 import { checkLoggedUser } from './firebase/auth.js';
@@ -18,6 +19,9 @@ const init = async () => {
         break;
       case '#timeline':
         main.appendChild(timeline());
+        break;
+      case '#home':
+        main.appendChild(home());
         break;
       case '#perfil':
         main.appendChild(perfil());
