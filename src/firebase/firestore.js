@@ -18,7 +18,7 @@ const db = getFirestore(app);
 
 export const createPost = (description) => {
   const auth = getAppAuth();
-  return addDoc(collection(db, 'post'), {
+  return addDoc(collection(db, 'posts'), {
     name: auth.currentUser.displayName,
     author: auth.currentUser.uid,
     description,
@@ -30,7 +30,7 @@ export const createPost = (description) => {
 export const accessPost = (updateListPost) => {
   const allPosts = [];
   const postQuery = query(
-    collection(db, 'post'),
+    collection(db, 'posts'),
     orderBy('desc'),
   );
 
@@ -47,7 +47,7 @@ export const accessPost = (updateListPost) => {
 };
 
 export const deletePost = async (postId) => {
-  const docRef = doc(db, 'post', postId);
+  const docRef = doc(db, 'posts', postId);
   await deleteDoc(docRef);
 };
 
@@ -57,7 +57,7 @@ export const updatePost = async (postId, newText) => {
 };
 
 export const hasUserLikedPost = async (postId) => {
-  const docRef = doc(db, 'post', postId);
+  const docRef = doc(db, 'posts', postId);
   const docSnap = await getDoc(docRef);
   if (docSnap && docSnap.exists) {
     const post = docSnap.data();
@@ -74,7 +74,7 @@ export const hasUserLikedPost = async (postId) => {
 export const likePost = async (postId, userId) => {
   const userHasLikedPost = await hasUserLikedPost(postId);
   if (!userHasLikedPost) {
-    const docRef = doc(db, 'post', postId);
+    const docRef = doc(db, 'posts', postId);
     const postDoc = await getDoc(docRef);
     if (postDoc && postDoc.exists) {
       const post = postDoc.data();
@@ -86,7 +86,7 @@ export const likePost = async (postId, userId) => {
       }
     }
   }
-  const washingtonRef = doc(db, 'post', postId);
+  const washingtonRef = doc(db, 'posts', postId);
   await updateDoc(washingtonRef, {
     whoLiked: arrayRemove(userId),
   });

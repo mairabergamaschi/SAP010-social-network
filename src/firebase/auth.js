@@ -2,7 +2,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithPopup,
+  signInWithRedirect,
   GoogleAuthProvider,
   updateProfile,
   FacebookAuthProvider,
@@ -55,18 +55,26 @@ export const loginWithEmail = (email, password) => {
 
 export const loginGoogle = async () => {
   const provider = new GoogleAuthProvider();
-  const auth = getAppAuth();
-  const userCredential = await signInWithPopup(auth, provider);
-  const user = userCredential.user;
-  return createUserDocument(user);
+  try {
+    const auth = getAppAuth();
+    await signInWithRedirect(auth, provider);
+    window.location.hash = '#feed';
+  } catch (error) {
+    console.log('Erro de login com o Google:', error);
+    console.log('Erro ao fazer login com o Google. Verifique suas credenciais e tente novamente.');
+  }
 };
 
 export const loginFacebook = async () => {
   const provider = new FacebookAuthProvider();
-  const auth = getAppAuth();
-  const userCredential = await signInWithPopup(auth, provider);
-  const user = userCredential.user;
-  return createUserDocument(user);
+  try {
+    const auth = getAppAuth();
+    await signInWithRedirect(auth, provider);
+    window.location.hash = '#feed';
+  } catch (error) {
+    console.log('Erro de login com o Google:', error);
+    console.log('Erro ao fazer login com o Google. Verifique suas credenciais e tente novamente.');
+  }
 };
 
 export const logout = () => {
