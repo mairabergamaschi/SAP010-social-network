@@ -2,7 +2,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithRedirect,
+  signInWithPopup,
   GoogleAuthProvider,
   updateProfile,
   FacebookAuthProvider,
@@ -25,7 +25,7 @@ export const getUserName = () => {
   if (user) {
     return user.displayName;
   }
-  return 'Usuária';
+  return 'viajante';
 };
 
 export const createUserDocument = (user) => {
@@ -38,14 +38,16 @@ export const createUserDocument = (user) => {
   return setDoc(userRef, userData);
 };
 
-export const createUserWithEmail = async (name, lastName, email, password) => {
+export const createUserWithEmail = (name, lastName, email, password) => {
   const auth = getAppAuth();
-  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  const user = userCredential.user;
-  await updateProfile(user, {
-    displayName: `${name} ${lastName}`,
-  });
-  return createUserDocument(user);
+  return createUserWithEmailAndPassword(auth, email, password).then(
+    (userCredential) => {
+      const user = userCredential.user;
+      return updateProfile(user, {
+        displayName: `${name} ${lastName}`,
+      }).then(() => createUserDocument(user));
+    },
+  );
 };
 
 export const loginWithEmail = (email, password) => {
@@ -53,28 +55,22 @@ export const loginWithEmail = (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
-export const loginGoogle = async () => {
+export const loginGoogle = () => {
   const provider = new GoogleAuthProvider();
-  try {
-    const auth = getAppAuth();
-    await signInWithRedirect(auth, provider);
-    window.location.hash = '#feed';
-  } catch (error) {
-    console.log('Erro de login com o Google:', error);
-    console.log('Erro ao fazer login com o Google. Verifique suas credenciais e tente novamente.');
-  }
+  const auth = getAppAuth();
+  return signInWithPopup(auth, provider).then((userCredential) => {
+    const user = userCredential.user;
+    return createUserDocument(user);
+  });
 };
 
-export const loginFacebook = async () => {
+export const loginFacebook = () => {
   const provider = new FacebookAuthProvider();
-  try {
-    const auth = getAppAuth();
-    await signInWithRedirect(auth, provider);
-    window.location.hash = '#feed';
-  } catch (error) {
-    console.log('Erro de login com o Google:', error);
-    console.log('Erro ao fazer login com o Google. Verifique suas credenciais e tente novamente.');
-  }
+  const auth = getAppAuth();
+  return signInWithPopup(auth, provider).then((userCredential) => {
+    const user = userCredential.user;
+    return createUserDocument(user);
+  });
 };
 
 export const logout = () => {

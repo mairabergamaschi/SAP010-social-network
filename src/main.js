@@ -14,9 +14,17 @@ const init = async () => {
       case '#register':
         main.appendChild(register());
         break;
-      case '#timeline':
-        main.appendChild(timeline());
+      case '#timeline': {
+        const userLoggedIn = await checkLoggedUser();
+        if (userLoggedIn) {
+          main.appendChild(timeline());
+        } else {
+          alert('Realize o login');
+          window.location.hash = '#login';
+          main.appendChild(login());
+        }
         break;
+      }
       default:
         main.appendChild(login());
         break;

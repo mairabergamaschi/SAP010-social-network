@@ -1,32 +1,36 @@
+import { getUserName, getUserId, logout } from '../../firebase/auth.js';
 import {
   createPost,
   accessPost,
   updatePost,
   likePost,
   deletePost,
-} from '../../firebase/firestore';
-import { getUserName, getUserId, logout } from '../../firebase/auth';
+} from '../../firebase/firestore.js';
+import photoicon from '../../images/iconPhoto.png';
 import homeicon from '../../images/iconHome.png';
 import exiticon from '../../images/iconExit.png';
+import imagetimeline from '../../images/imagetimeline.png';
 import likeicon from '../../images/iconLike.png';
 import editicon from '../../images/iconEdit.png';
 import deleteicon from '../../images/iconDelete.png';
 
 export default () => {
-  const container = document.createElement('div');
-  const feed = `
+  const timeline = document.createElement('div');
+  const viewPost = `
   <div class='container'>
     <div class='left-timeline'>
 
+      <img src='${photoicon}' alt='Foto de perfil' class='profilePhoto' />
       <p class='postTitle'>Olá ${getUserName()}, bem-vindo(a) de volta!</p>
       <figure class='icones'>
         <button type='button' class='button-timeline' id='home-btn'><img src='${homeicon}' class='icon-timeline' alt='Icone home'></button>
         <button type='button' class='button-timeline' id='logout-btn'><img src='${exiticon}' class='icon-timeline' alt='logout icon'></button>
       </figure>
     </div>
+    <img src='${imagetimeline}' class='img-timeline' alt='edit image' />
     <div class='right-timeline'>
       <div class='input-container'>
-        <textarea class='input-message' id='postArea' placeholder='Compartilhe...'></textarea>
+        <textarea class='input-message' id='postArea' placeholder='COMPARTILHE UMA EXPERIÊNCIA...'></textarea>
         <button class='shareBtn' id='sharePost'>COMPARTILHAR</button>
       </div>
       <div id='postList'></div>
@@ -34,26 +38,35 @@ export default () => {
   </div>
   `;
 
-  container.innerHTML = feed;
+  timeline.innerHTML = viewPost;
 
-  const postBtn = container.querySelector('#sharePost');
-  const descriptionPost = container.querySelector('#postArea');
-  const postList = container.querySelector('#postList');
-  const logOutBtn = container.querySelector('#logout-btn');
-  const homeBtn = container.querySelector('#home-btn');
+  const postBtn = timeline.querySelector('#sharePost');
+  const descriptionPost = timeline.querySelector('#postArea');
+  const postList = timeline.querySelector('#postList');
+  const logOutBtn = timeline.querySelector('#logout-btn');
 
   const createPostElement = (
     name,
+    createdAt,
     description,
     postId,
     authorId,
     whoLiked,
   ) => {
+    const createdAtDate = new Date(createdAt.seconds * 1000);
+    const createdAtFormattedDate = createdAtDate.toLocaleDateString('pt-BR');
+    const createdAtFormattedTime = createdAtDate.toLocaleTimeString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+    const createdAtFormatted = `${createdAtFormattedDate} ~ ${createdAtFormattedTime}`;
     const postElement = document.createElement('div');
     postElement.innerHTML = `
       <div class='post-container'>
         <div class='nameUser'>
           <p class='userName'>${name}</p>
+          <p class='dataPost'>${createdAtFormatted}</p>
         </div>
         <p class='textPost'>${description}</p>
           <div class='image-icons'>
@@ -79,10 +92,11 @@ export default () => {
     postList.innerHTML = '';
     TodosPosts.forEach(async (post) => {
       const {
-        name, description, id, author, whoLiked,
+        name, createdAt, description, id, author, whoLiked,
       } = post;
       const postElement = createPostElement(
         name,
+        createdAt,
         description,
         id,
         author,
@@ -168,16 +182,6 @@ export default () => {
   postBtn.addEventListener('click', handlePostBtnClick);
   postList.addEventListener('click', handlePostListClick);
 
-  homeBtn.addEventListener('click', () => {
-    logout() // colocar para ir pro home
-      .then(() => {
-        window.location.hash = '#home';
-      })
-      .catch(() => {
-        alert('Ocorreu um erro, tente novamente.');
-      });
-  });
-
   logOutBtn.addEventListener('click', () => {
     logout()
       .then(() => {
@@ -189,5 +193,5 @@ export default () => {
   });
 
   loadPosts();
-  return container;
+  return timeline;
 };
