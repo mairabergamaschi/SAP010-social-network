@@ -6,7 +6,6 @@ import {
   likePost,
   deletePost,
 } from '../../firebase/firestore.js';
-import photoicon from '../../images/iconPhoto.png';
 import homeicon from '../../images/iconHome.png';
 import exiticon from '../../images/iconExit.png';
 import imagetimeline from '../../images/imagetimeline.png';
@@ -20,7 +19,6 @@ export default () => {
   <div class='container'>
     <div class='left-timeline'>
 
-      <img src='${photoicon}' alt='Foto de perfil' class='profilePhoto' />
       <p class='postTitle'>Olá ${getUserName()}, bem-vindo(a) de volta!</p>
       <figure class='icones'>
         <button type='button' class='button-timeline' id='home-btn'><img src='${homeicon}' class='icon-timeline' alt='Icone home'></button>
