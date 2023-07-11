@@ -8,7 +8,6 @@ import {
 } from '../../firebase/firestore.js';
 import homeicon from '../../images/iconHome.png';
 import exiticon from '../../images/iconExit.png';
-import imagetimeline from '../../images/imagetimeline.png';
 import likeicon from '../../images/iconLike.png';
 import editicon from '../../images/iconEdit.png';
 import deleteicon from '../../images/iconDelete.png';
@@ -17,6 +16,7 @@ export default () => {
   const timeline = document.createElement('div');
   const viewPost = `
   <div class='container'>
+
     <div class='left-timeline'>
 
       <p class='postTitle'>Olá ${getUserName()}, bem-vindo(a) de volta!</p>
@@ -24,15 +24,19 @@ export default () => {
         <button type='button' class='button-timeline' id='home-btn'><img src='${homeicon}' class='icon-timeline' alt='Icone home'></button>
         <button type='button' class='button-timeline' id='logout-btn'><img src='${exiticon}' class='icon-timeline' alt='logout icon'></button>
       </figure>
+      
     </div>
-    <img src='${imagetimeline}' class='img-timeline' alt='edit image' />
+
     <div class='right-timeline'>
       <div class='input-container'>
-        <textarea class='input-message' id='postArea' placeholder='COMPARTILHE UMA EXPERIÊNCIA...'></textarea>
+        <textarea class='input-message' id='postArea' placeholder='Compartilhe...'></textarea>
         <button class='shareBtn' id='sharePost'>COMPARTILHAR</button>
       </div>
-      <div id='postList'></div>
+
+        <div id='postList'></div>
+
     </div>
+
   </div>
   `;
 
@@ -45,26 +49,16 @@ export default () => {
 
   const createPostElement = (
     name,
-    createdAt,
     description,
     postId,
     authorId,
     whoLiked,
   ) => {
-    const createdAtDate = new Date(createdAt.seconds * 1000);
-    const createdAtFormattedDate = createdAtDate.toLocaleDateString('pt-BR');
-    const createdAtFormattedTime = createdAtDate.toLocaleTimeString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
-    const createdAtFormatted = `${createdAtFormattedDate} ~ ${createdAtFormattedTime}`;
     const postElement = document.createElement('div');
     postElement.innerHTML = `
       <div class='post-container'>
         <div class='nameUser'>
           <p class='userName'>${name}</p>
-          <p class='dataPost'>${createdAtFormatted}</p>
         </div>
         <p class='textPost'>${description}</p>
           <div class='image-icons'>
@@ -90,11 +84,10 @@ export default () => {
     postList.innerHTML = '';
     TodosPosts.forEach(async (post) => {
       const {
-        name, createdAt, description, id, author, whoLiked,
+        name, description, id, author, whoLiked,
       } = post;
       const postElement = createPostElement(
         name,
-        createdAt,
         description,
         id,
         author,

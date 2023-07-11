@@ -32,12 +32,6 @@
     width: 3em;
 }
 
-.img-register {
-    width: 20em;
-    position: sticky;
-    top: 80vh;
-}
-
 .register-form {
 position: relative;
 }

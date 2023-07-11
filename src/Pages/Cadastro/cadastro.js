@@ -1,7 +1,6 @@
 import { errorsFirebase, validateRegister } from '../../validations.js';
 import { createUserWithEmail } from '../../firebase/auth.js';
 import arrow from '../../images/arrow.png';
-import imageregister from '../../images/imageregister.png';
 
 export default () => {
   function getInputValues() {
@@ -80,9 +79,6 @@ export default () => {
         </form>
       </section>
     </div>
-    <figure class='image-register'>
-      <img src='${imageregister}' class='img-register' alt='registerImg'>
-    </figure>
   `;
 
   registrationForm.innerHTML = templateRegister;

@@ -6,7 +6,7 @@
 }
 
 .logo {
-    width: 15em;
+    width: 25em;
     justify-content: center;
 }
 
@@ -98,7 +98,7 @@
 
 @media screen and (min-width: 768px) {
     .logo {
-        width: 20em;
+        width: 25em;
         margin-left: 2em;
     }
 
@@ -133,7 +133,7 @@
     }
 
     .text-slogan {
-        color: var(--white);
+        color: #491a9d;
         justify-content: center;
         display: flex;
         filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 1));

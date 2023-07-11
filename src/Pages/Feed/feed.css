@@ -12,9 +12,9 @@
 .container {
     display: grid;
     grid-template-areas:
-      "top"
-      "middle"
-      "bottom";
+        "top"
+        "middle"
+        "bottom";
     grid-template-rows: auto auto 1fr;
     animation: entering 0.7s ease-in-out;     
 }
@@ -28,7 +28,6 @@
     background-image: linear-gradient(var(--darkblue), 20%, var(--blue), var(--green));
     padding: 0.5em;  
     border-radius: 0 0 10px 10px;
-    
 }
 
 .img-timeline {
@@ -87,7 +86,7 @@
     text-align: center; 
     word-wrap: break-word;
     resize: vertical;
-    font-family: 'Inter', cursive;
+    font-family: 'Inter';
     padding: 1.5em;
     font-size: 0.6em;
     font-weight: bold;
@@ -109,7 +108,7 @@
     margin-top: 1em;
     font-size: 0.6em;
     text-shadow: -0.5px 0.5px 0 var(--black), 0.5px 0.5px 0 var(--black);
-    font-family: 'Inter', cursive;
+    font-family: 'Inter';
 }
 
 .post-container {
@@ -122,7 +121,7 @@
     margin-right: auto;
     font-size: 0.9em;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  }
+}
 
 .nameUser {
     margin-top: 1em;
@@ -135,27 +134,20 @@
     background-image: linear-gradient(var(--darkblue), 20%, var(--blue), var(--green));
     font-weight: bold;
     letter-spacing: 0.07em;
-    
-
 }
 
-.dataPost {
-    font-size: 0.6em;
-
-}
 .textPost {
-   background-color: var(--white);
-   color: var(--black);
-   padding: 1em;
-   margin-left: auto;
-   margin-right: auto;
-   height: auto;
-   word-wrap: break-word;
-   border-radius:  0 0 0.8em 0.8em ;
-   margin-bottom: 0.7em;
-   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-   font-weight: bold;
-   
+    background-color: var(--white);
+    color: var(--black);
+    padding: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    word-wrap: break-word;
+    border-radius:  0 0 0.8em 0.8em ;
+    margin-bottom: 0.7em;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    font-weight: bold;
 }
 .likePost {
     color: black;
@@ -163,12 +155,6 @@
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
     align-items: center;
-}
-
-.icon-timeline {
-    text-align: center;
-    color: var(--white); 
-    width: 1.5em;   
 }
 
 .icones {
@@ -216,16 +202,7 @@ a {
         font-size: 1.2em;     
         background-image: linear-gradient(var(--darkblue), 20%, var(--blue), var(--green));
     }
-    .profilePhoto{
-        margin: 3em 0;
-    }
 
-    .img-timeline {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        transform: translate(5%, -105%);
-    }
      
     .left-timeline {
         grid-area: left;  
@@ -284,8 +261,3 @@ a {
     }
 }   
 
-@media screen and (max-width: 896px) {
-    .img-timeline {
-      display: none;
-    }
-  }

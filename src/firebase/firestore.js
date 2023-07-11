@@ -22,7 +22,6 @@ export const createPost = (description) => {
     name: auth.currentUser.displayName,
     author: auth.currentUser.uid,
     description,
-    createdAt: new Date(),
     likes: [],
     whoLiked: [],
   });
@@ -32,7 +31,7 @@ export const accessPost = (updateListPost) => {
   const allPosts = [];
   const postQuery = query(
     collection(db, 'posts'),
-    orderBy('createdAt', 'desc'),
+    orderBy('createdAt','desc'),
   );
 
   onSnapshot(postQuery, (querySnapshot) => {
