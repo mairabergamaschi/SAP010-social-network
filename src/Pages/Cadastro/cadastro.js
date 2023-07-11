@@ -2,6 +2,7 @@ import { errorsFirebase, validateRegister } from '../../validations.js';
 import { createUserWithEmail } from '../../firebase/auth.js';
 import arrow from '../../images/arrow.png';
 
+// exportação dos inputs
 export default () => {
   function getInputValues() {
     const name = document.getElementById('name-user').value;
@@ -19,6 +20,7 @@ export default () => {
     };
   }
 
+  // mensagens de erro
   function printErrorMessage(message) {
     const errorMessage = document.getElementById('error-message');
     errorMessage.textContent = message;
@@ -49,7 +51,7 @@ export default () => {
       printErrorMessage(printError || 'Erro ao registrar o usuário');
     }
   }
-
+  // cadastro
   const registrationForm = document.createElement('div');
 
   const templateRegister = ` 

@@ -1,10 +1,10 @@
-// Import the functions you need from the SDKs you need
+// Funções SDK
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/storage';
 
-// Your web app's Firebase configuration
+// Configuração Firebase
 const firebaseConfig = {
   apiKey: 'AIzaSyD8t4N-aXbeJKMNRkOGgLyBCJc8ueg4VEo',
   authDomain: 'ladiesonthego-13672.firebaseapp.com',
@@ -14,12 +14,12 @@ const firebaseConfig = {
   appId: '1:1007461661764:web:7a2f80e07f36d1dc4a5011',
 };
 firebase.initializeApp(firebaseConfig);
-// Initialize Firebase
+// Inicialização do Firebase
 const app = firebase.app();
 const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
-
+// exportação do Firebase
 export {
   app, auth, db, storage,
 };

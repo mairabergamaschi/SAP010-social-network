@@ -9,6 +9,7 @@ import logologin from '../../images/logologin.png';
 import icongoogle from '../../images/iconGoogle.png';
 import iconfacebook from '../../images/iconFacebook.png';
 
+// formulario de login
 export default () => {
   const container = document.createElement('div');
 
@@ -67,6 +68,7 @@ export default () => {
   const facebookButton = container.querySelector('#facebook-button');
   const forgotPasswordButton = container.querySelector('.forgot-password');
 
+  // messagens de erro
   function printErrorMessage(message) {
     const errorMessage = document.getElementById('error-message');
     errorMessage.textContent = message;
@@ -122,6 +124,7 @@ export default () => {
       });
   };
 
+  // clicar
   loginButton.addEventListener('click', handleLogin);
 
   googleButton.addEventListener('click', handleGoogleLogin);

@@ -12,6 +12,7 @@ import likeicon from '../../images/iconLike.png';
 import editicon from '../../images/iconEdit.png';
 import deleteicon from '../../images/iconDelete.png';
 
+// nome e input do post
 export default () => {
   const timeline = document.createElement('div');
   const viewPost = `
@@ -47,18 +48,29 @@ export default () => {
   const postList = timeline.querySelector('#postList');
   const logOutBtn = timeline.querySelector('#logout-btn');
 
+  // elementos do post
   const createPostElement = (
     name,
+    createdAt,
     description,
     postId,
     authorId,
     whoLiked,
   ) => {
+    const createdAtDate = new Date(createdAt.seconds * 1000);
+    const createdAtFormattedDate = createdAtDate.toLocaleDateString('pt-BR');
+    const createdAtFormattedTime = createdAtDate.toLocaleTimeString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    });
+    const createdAtFormatted = `${createdAtFormattedDate} ~ ${createdAtFormattedTime}`;
     const postElement = document.createElement('div');
     postElement.innerHTML = `
       <div class='post-container'>
         <div class='nameUser'>
           <p class='userName'>${name}</p>
+          <p class='dataPost'>${createdAtFormatted}</p>
         </div>
         <p class='textPost'>${description}</p>
           <div class='image-icons'>
@@ -80,14 +92,16 @@ export default () => {
     return postElement;
   };
 
+  // lista dos posts
   const updateListPost = (TodosPosts) => {
     postList.innerHTML = '';
     TodosPosts.forEach(async (post) => {
       const {
-        name, description, id, author, whoLiked,
+        name, createdAt, description, id, author, whoLiked,
       } = post;
       const postElement = createPostElement(
         name,
+        createdAt,
         description,
         id,
         author,
@@ -116,9 +130,10 @@ export default () => {
   };
 
   const loadPosts = async () => {
-    await accessPost(updateListPost);
+    accessPost(updateListPost);
   };
 
+  // alertas
   const handlePostBtnClick = () => {
     const description = descriptionPost.value;
 
@@ -136,6 +151,7 @@ export default () => {
     }
   };
 
+  // clicks
   const handlePostListClick = (event) => {
     const target = event.target;
     const deleteButton = target.closest('#btn-delete');
@@ -173,6 +189,7 @@ export default () => {
   postBtn.addEventListener('click', handlePostBtnClick);
   postList.addEventListener('click', handlePostListClick);
 
+  // função de logout
   logOutBtn.addEventListener('click', () => {
     logout()
       .then(() => {

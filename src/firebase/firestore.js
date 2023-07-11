@@ -14,19 +14,23 @@ import {
 import { getAppAuth } from './auth';
 import { app } from './firebase';
 
+// Coletar a db
 const db = getFirestore(app);
 
+// criar post
 export const createPost = (description) => {
   const auth = getAppAuth();
   return addDoc(collection(db, 'posts'), {
     name: auth.currentUser.displayName,
     author: auth.currentUser.uid,
     description,
+    createdAt: new Date(),
     likes: [],
     whoLiked: [],
   });
 };
 
+// acessar e imprimir o post
 export const accessPost = (updateListPost) => {
   const allPosts = [];
   const postQuery = query(
@@ -46,16 +50,19 @@ export const accessPost = (updateListPost) => {
   });
 };
 
+// deletar o post
 export const deletePost = async (postId) => {
   const docRef = doc(db, 'posts', postId);
   await deleteDoc(docRef);
 };
 
+// editar o post
 export const updatePost = async (postId, newText) => {
   const docRef = doc(db, 'posts', postId);
   return updateDoc(docRef, newText);
 };
 
+// quem deu like
 export const hasUserLikedPost = async (postId) => {
   const docRef = doc(db, 'posts', postId);
   const docSnap = await getDoc(docRef);
@@ -71,6 +78,7 @@ export const hasUserLikedPost = async (postId) => {
   return false;
 };
 
+// like e tirar o like
 export const likePost = async (postId, userId) => {
   const userHasLikedPost = await hasUserLikedPost(postId);
   if (!userHasLikedPost) {
