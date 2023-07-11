@@ -31,7 +31,7 @@ export const accessPost = (updateListPost) => {
   const allPosts = [];
   const postQuery = query(
     collection(db, 'posts'),
-    orderBy('createdAt','desc'),
+    orderBy('createdAt', 'desc'),
   );
 
   onSnapshot(postQuery, (querySnapshot) => {

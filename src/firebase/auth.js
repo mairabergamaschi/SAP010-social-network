@@ -38,16 +38,14 @@ export const createUserDocument = (user) => {
   return setDoc(userRef, userData);
 };
 
-export const createUserWithEmail = (name, lastName, email, password) => {
+export const createUserWithEmail = async (name, lastName, email, password) => {
   const auth = getAppAuth();
-  return createUserWithEmailAndPassword(auth, email, password).then(
-    (userCredential) => {
-      const user = userCredential.user;
-      return updateProfile(user, {
-        displayName: `${name} ${lastName}`,
-      }).then(() => createUserDocument(user));
-    },
-  );
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const user = userCredential.user;
+  await updateProfile(user, {
+    displayName: `${name} ${lastName}`,
+  });
+  return createUserDocument(user);
 };
 
 export const loginWithEmail = (email, password) => {
@@ -55,22 +53,20 @@ export const loginWithEmail = (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
-export const loginGoogle = () => {
+export const loginGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const auth = getAppAuth();
-  return signInWithPopup(auth, provider).then((userCredential) => {
-    const user = userCredential.user;
-    return createUserDocument(user);
-  });
+  const userCredential = await signInWithPopup(auth, provider);
+  const user = userCredential.user;
+  return createUserDocument(user);
 };
 
-export const loginFacebook = () => {
+export const loginFacebook = async () => {
   const provider = new FacebookAuthProvider();
   const auth = getAppAuth();
-  return signInWithPopup(auth, provider).then((userCredential) => {
-    const user = userCredential.user;
-    return createUserDocument(user);
-  });
+  const userCredential = await signInWithPopup(auth, provider);
+  const user = userCredential.user;
+  return createUserDocument(user);
 };
 
 export const logout = () => {
