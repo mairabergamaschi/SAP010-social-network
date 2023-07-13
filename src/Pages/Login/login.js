@@ -19,7 +19,9 @@ export default () => {
         <figure class='logo-container'>
           <img src= ${logologin} class='logo' alt='Logo da Ladies On The Go!'>
         </figure>
-        <h1 class='title'>Ladies On The Go!</h1>
+      </div>
+      <div class='intro'>
+        <h1 class='title'>Bem-vinda ao Ladies on the Go, a rede social dedicada a mulheres que viajam sozinhas ou em grupos de mulheres! Planeje suas aventuras, encontre companheiras de viagem, descubra destinos emocionantes e compartilhe suas próprias experiências.</h1>
         <br>
         <h6 class='text-slogan'>A rede social da mulher que viaja.</h6>
       </div>
@@ -27,7 +29,7 @@ export default () => {
           <form class='login-form'>
           <br>
 
-          <h2 class='subtitle'>Entrar</h2>
+          <h2 class='subtitle'>Login</h2>
           <div class='inputs-container'>
             <input type='text' class='inputs-info' placeholder='E-MAIL' id='email' />
             <input type='password' class='inputs-info' placeholder='SENHA' id='senha' />
@@ -39,10 +41,8 @@ export default () => {
             <button type='button' id='login-button' class='submit' href='#'>ENTRAR</button>
           </nav>
           <p id='error-message' class='error-message'></p>
-          <div class='text'>
             <button type='button' class='forgot-password'>Recuperar senha</button><br>
             <button type='button' class='register-here'><a href='#register' class='register-here'>Cadastrar</a></button>
-          </div>
           <div class='text'>
             Entrar com:
           </div>

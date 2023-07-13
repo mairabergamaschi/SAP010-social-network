@@ -1,6 +1,7 @@
 import login from './pages/login/login.js';
 import register from './pages/Cadastro/cadastro.js';
 import timeline from './pages/Feed/feed.js';
+import profile from './pages/Perfil/perfil.js';
 import { checkLoggedUser } from './firebase/auth.js';
 
 const main = document.querySelector('#root');
@@ -25,6 +26,9 @@ const init = async () => {
         }
         break;
       }
+      case '#perfil':
+        main.appendChild(profile());
+        break;
       default:
         main.appendChild(login());
         break;

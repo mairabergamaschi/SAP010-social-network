@@ -6,7 +6,7 @@ import {
   likePost,
   deletePost,
 } from '../../firebase/firestore.js';
-import homeicon from '../../images/iconHome.png';
+import profileicon from '../../images/photoicon.png';
 import exiticon from '../../images/iconExit.png';
 import likeicon from '../../images/iconLike.png';
 import editicon from '../../images/iconEdit.png';
@@ -19,10 +19,15 @@ export default () => {
   <div class='container'>
 
     <div class='left-timeline'>
+      <button type='button' class='menu-btn' id='menu-btn'>
+        <span class='menu-icon'></span>
+        <span class='menu-icon'></span>
+        <span class='menu-icon'></span>
+      </button>
 
       <p class='postTitle'>Olá ${getUserName()}, bem-vindo(a) de volta!</p>
       <figure class='icones'>
-        <button type='button' class='button-timeline' id='home-btn'><img src='${homeicon}' class='icon-timeline' alt='Icone home'></button>
+        <button type='button' class='button-timeline' id='home-btn'><img src='${profileicon}' class='icon-timeline' alt='Icone Perfil'></button>
         <button type='button' class='button-timeline' id='logout-btn'><img src='${exiticon}' class='icon-timeline' alt='logout icon'></button>
       </figure>
       
@@ -47,6 +52,7 @@ export default () => {
   const descriptionPost = timeline.querySelector('#postArea');
   const postList = timeline.querySelector('#postList');
   const logOutBtn = timeline.querySelector('#logout-btn');
+  const profileBtn = timeline.querySelector('#home-btn');
 
   // elementos do post
   const createPostElement = (
@@ -91,6 +97,15 @@ export default () => {
 
     return postElement;
   };
+
+  const menuBtn = timeline.querySelector('#menu-btn');
+  const leftTimeline = timeline.querySelector('.left-timeline');
+
+  menuBtn.addEventListener('click', () => {
+    leftTimeline.classList.toggle('open');
+    menuBtn.classList.toggle('open');
+  });
+
 
   // lista dos posts
   const updateListPost = (TodosPosts) => {
@@ -190,6 +205,17 @@ export default () => {
   postList.addEventListener('click', handlePostListClick);
 
   // função de logout
+  profileBtn.addEventListener('click', () => {
+    logout()
+      .then(() => {
+        window.location.hash = '#perfil';
+      })
+      .catch(() => {
+        alert('Ocorreu um erro, tente novamente.');
+      });
+  });
+
+  // função de logout
   logOutBtn.addEventListener('click', () => {
     logout()
       .then(() => {
@@ -203,3 +229,5 @@ export default () => {
   loadPosts();
   return timeline;
 };
+
+
