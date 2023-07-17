@@ -1,12 +1,14 @@
 .login-wrap {
-  display: flex;
   justify-content: center;
   min-height: 100vh;
+  display: flex;
+  margin-left: 3rem;
 }
 
 .logo-container {
   margin-bottom: 1rem;
   margin-top: -3rem;
+  margin-left: 2rem;
 }
 
 .logo {
@@ -30,6 +32,7 @@
   color: var(--white);
   font-size: 1rem;
   margin-bottom: 1rem;
+  margin-left: 2rem;
 }
 
 .right {

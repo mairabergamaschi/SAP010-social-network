@@ -19,8 +19,6 @@ export default () => {
         <figure class='logo-container'>
           <img src= ${logologin} class='logo' alt='Logo da Ladies On The Go!'>
         </figure>
-      </div>
-      <div class='intro'>
         <h1 class='title'>Bem-vinda ao Ladies on the Go, a rede social dedicada a mulheres que viajam sozinhas ou em grupos de mulheres! Planeje suas aventuras, encontre companheiras de viagem, descubra destinos emocionantes e compartilhe suas próprias experiências.</h1>
         <br>
         <h6 class='text-slogan'>A rede social da mulher que viaja.</h6>
