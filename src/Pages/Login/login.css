@@ -1,14 +1,12 @@
 .login-wrap {
   justify-content: center;
-  min-height: 100vh;
+  min-height: 111vh;
   display: flex;
-  margin-left: 3rem;
 }
 
 .logo-container {
   margin-bottom: 1rem;
   margin-top: -3rem;
-  margin-left: 2rem;
 }
 
 .logo {
@@ -33,6 +31,13 @@
   font-size: 1rem;
   margin-bottom: 1rem;
   margin-left: 2rem;
+}
+
+.left{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .right {
@@ -87,7 +92,7 @@
 .button-eye {
   margin-top: 4rem;
   position: absolute;
-  right: -9rem;
+  right: -8rem;
   transform: translateY(-50%);
   border: none;
   cursor: pointer;
@@ -176,11 +181,15 @@
   margin-top: 1rem;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 885px) {
+  .rodape{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+  }
   .logo-container {
-    width: 100%;
+    width: auto;
     max-width: 38rem;
-    margin-left: 3em;
   }
 
   .login-wrap {
@@ -188,16 +197,16 @@
   }
 
   .left {
-    margin-left: -1rem;
-    margin-right: 2rem;
     padding: 3rem;
     justify-items: center;
+    width: auto;
   }
 
   .right {
     justify-content: center;
     text-align: center;
     margin-top: 0;
+    width: auto;
   }
 
   .title {
@@ -232,7 +241,7 @@
   .button-eye {
     margin-top: 2.3rem;
     position: absolute;
-    right: -3rem;
+    right: -2rem;
     transform: translate(25%, 30%);
   }
 }

@@ -19,12 +19,6 @@ export default () => {
   <div class='container'>
 
     <div class='left-timeline'>
-      <button type='button' class='menu-btn' id='menu-btn'>
-        <span class='menu-icon'></span>
-        <span class='menu-icon'></span>
-        <span class='menu-icon'></span>
-      </button>
-
       <p class='postTitle'>Olá ${getUserName()}, bem-vindo(a) de volta!</p>
       <figure class='icones'>
         <button type='button' class='button-timeline' id='home-btn'><img src='${profileicon}' class='icon-timeline' alt='Icone Perfil'></button>
@@ -97,15 +91,6 @@ export default () => {
 
     return postElement;
   };
-
-  const menuBtn = timeline.querySelector('#menu-btn');
-  const leftTimeline = timeline.querySelector('.left-timeline');
-
-  menuBtn.addEventListener('click', () => {
-    leftTimeline.classList.toggle('open');
-    menuBtn.classList.toggle('open');
-  });
-
 
   // lista dos posts
   const updateListPost = (TodosPosts) => {
