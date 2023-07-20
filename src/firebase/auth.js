@@ -18,17 +18,13 @@ export const getAppAuth = () => getAuth(app);
 // pega a Id do Usuário
 export const getUserId = () => {
   const auth = getAppAuth();
-  return auth.currentUser.uid;
+  return auth.currentUser ? auth.currentUser.uid : null;
 };
 
 // pega o nome do Usuário
 export const getUserName = () => {
   const auth = getAppAuth();
-  const user = auth.currentUser;
-  if (user) {
-    return user.displayName;
-  }
-  return 'Usuária';
+  return auth.currentUser ? auth.currentUser.displayName : 'Usuária';
 };
 
 // cria o documento na db com os dados do Usuário
