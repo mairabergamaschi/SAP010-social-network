@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { errorsFirebase, validateRegister } from '../../validations.js';
 import { createUserWithEmail } from '../../firebase/auth.js';
 import arrow from '../../images/arrow.png';
