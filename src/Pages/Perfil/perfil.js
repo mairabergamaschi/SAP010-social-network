@@ -1,17 +1,16 @@
-import { getUserName, getUserId, logout } from '../../firebase/auth.js';
+import { logout } from '../../firebase/auth.js';
 import profileicon from '../../images/photoicon.png';
 import returnIcon from '../../images/arrow.png';
 import logoutIcon from '../../images/iconExit.png';
+import { showErrorNotification } from '../../toastify.js';
 
 export default () => {
   const profile = document.createElement('div');
-  const name = getUserName();
-  
   const profileSection = `
     <section class="user-profile">
       <div class="profile-header">
         <img src='${profileicon}' class='profile' alt="Foto do Usuário"></img>
-        <h2>${name}</h2>
+        <h2 id="user-name">Nome de Usuária</h2>
         <a href="#editarPerfil">Editar Perfil</a>
       </div>
       <div class="profile-actions">
@@ -28,8 +27,9 @@ export default () => {
   profile.innerHTML = profileSection;
 
   const handleReturnToFeedClick = () => {
-    window.location.hash = '#timeline';
+        window.location.hash = '#timeline';
   };
+
 
   const handleLogoutClick = () => {
     logout()
@@ -37,7 +37,7 @@ export default () => {
         window.location.hash = '#login';
       })
       .catch(() => {
-        alert('Ocorreu um erro, tente novamente.');
+        showErrorNotification('Ocorreu um erro, tente novamente.');
       });
   };
 

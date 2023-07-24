@@ -25,7 +25,7 @@
     grid-area: top;
     top: 3rem;
     z-index: 1;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0px 4px 4px #17322A);
     background-image: linear-gradient(var(--darkblue), 20%, var(--blue), var(--green));
     padding: 0.5em;
     border-radius: 0 0 10px 10px;
@@ -43,8 +43,8 @@
 
 .postTitle {
     font-weight: bold;
-    color: var(--white);
-    font-size: 1.5rem;
+    color: var(--timbergreen);
+    font-size: 1.3rem;
     margin-bottom: 2rem;
     margin-top: 1rem;
     text-align: center;
@@ -56,7 +56,7 @@
 }
 
 .button-timeline {
-    background-color: rgba(255, 253, 253, 0);
+    background-color: transparent;
     border: none;
     margin-right: 1em;
     margin-left: 1em;
@@ -71,20 +71,6 @@
     background-color: transparent;
 }
 
-.input-container,
-.post-container {
-    margin: 2em;
-    padding: 0.5em;
-    width: 98%;
-    background-color: var(--lightblue);
-    border-radius: 0.8em;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 0.9em;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-}
-
-
 .input-container {
     display: flex;
     flex-direction: column;
@@ -95,8 +81,7 @@
     border-radius: 0.8em;
     margin-left: auto;
     margin-right: auto;
-    background-color: var(--lightblue);
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    background-color: var(--easternblue);
 }
 
 .input-message {
@@ -106,19 +91,18 @@
     text-align: center;
     word-wrap: break-word;
     resize: vertical;
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, sans-serif;
     padding: 1.5em;
-    font-size: 0.6em;
+    font-size: 0.8em;
     font-weight: bold;
     border-radius: 0.8em;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
     width: 100%;
-
+    filter: drop-shadow(0 3px 3px var(--timbergreen));
 }
 
 .shareBtn {
-    color: var(--white);
-    background-color: var(--darkblue);
+    color: var(--timbergreen);
+    background-color: var(--junglemist);
     width: 11em;
     height: 2em;
     border: none;
@@ -127,38 +111,38 @@
     letter-spacing: 0.08em;
     margin-top: 1em;
     font-size: 0.6em;
-    text-shadow: -0.5px 0.5px 0 var(--black), 0.5px 0.5px 0 var(--black);
-    font-family: 'Inter';
+    text-shadow: -0.5px 0.5px 0 var(--timbergreen), 0.5px 0.5px 0 var(--timbergreen);
+    font-family: 'Inter', Arial, sans-serif;
 }
 
 .post-container {
     margin: 2em;
     padding: 0.5em;
     width: 98%;
-    background-color: var(--lightblue);
+    background-color: var(--easternblue);
     border-radius: 0.8em;
     margin-left: auto;
     margin-right: auto;
     font-size: 0.9em;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
 .nameUser {
     margin-top: 1em;
     padding: 0.5em;
     border-radius: 0.8em 0.8em 0 0;
-    background-color: var(--darkblue);
-    color: var(--white);
+    background-color: var(--junglemist);
+    color: var(--timbergreen);
     margin-left: auto;
     margin-right: auto;
     background-image: linear-gradient(var(--darkblue), 20%, var(--blue), var(--green));
-    font-weight: bold;
+    font-weight: bolder;
+    font-size: 1rem;
     letter-spacing: 0.07em;
 }
 
 .textPost {
-    background-color: var(--white);
-    color: var(--black);
+    background-color: white;
+    color: var(--timbergreen);
     padding: 1em;
     margin-left: auto;
     margin-right: auto;
@@ -166,12 +150,13 @@
     word-wrap: break-word;
     border-radius: 0 0 0.8em 0.8em;
     margin-bottom: 0.7em;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-    font-weight: bold;
+    filter: drop-shadow(0px 4px 4px #17322A);
+    font-weight: bolder;
+    font-size: 1rem;
 }
 
 .likePost {
-    color: black;
+    color: #17322A;
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
@@ -201,22 +186,6 @@ a {
 }
 
 @media screen and (min-width: 768px) {
-    ::-webkit-scrollbar {
-        width: 0.5em;
-    }
-
-    ::-webkit-scrollbar-track {
-        background-color: var(--lightblue);
-        border: 0.1em solid var(--darkblue);
-        border-radius: 0.3em;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background-color: var(--blue);
-        border: 0.1em solid var(--darkblue);
-        border-radius: 0.3em;
-    }
-
     .container {
         display: grid;
         grid-template-areas: "left right";
@@ -257,7 +226,7 @@ a {
         grid-area: right;
         overflow-y: scroll;
         border-left: solid var(--darkblue) 0.1em;
-        box-shadow: inset 4px 0px 4px rgba(0, 0, 0, 0.25);
+        box-shadow: inset 4px 0px 4px #17322A;
         z-index: 1;
         margin: 0.1em 0 1.5em 0;
     }

@@ -1,8 +1,10 @@
-import login from './pages/login/login.js';
+import login from './pages/Login/login.js';
 import register from './pages/Cadastro/cadastro.js';
 import timeline from './pages/Feed/feed.js';
 import profile from './pages/Perfil/perfil.js';
+import edit from './pages/Editar/editar.js';
 import { checkLoggedUser } from './firebase/auth.js';
+import { showErrorNotification } from './toastify.js';
 
 const main = document.querySelector('#root');
 const init = async () => {
@@ -20,7 +22,7 @@ const init = async () => {
         if (userLoggedIn) {
           main.appendChild(timeline());
         } else {
-          alert('Realize o login');
+          showErrorNotification('Realize o login');
           window.location.hash = '#login';
           main.appendChild(login());
         }
@@ -28,6 +30,9 @@ const init = async () => {
       }
       case '#perfil':
         main.appendChild(profile());
+        break;
+      case '#editarPerfil':
+        main.appendChild(edit());
         break;
       default:
         main.appendChild(login());

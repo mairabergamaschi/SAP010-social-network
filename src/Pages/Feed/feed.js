@@ -11,33 +11,27 @@ import exiticon from '../../images/iconExit.png';
 import likeicon from '../../images/iconLike.png';
 import editicon from '../../images/iconEdit.png';
 import deleteicon from '../../images/iconDelete.png';
+import { showConfirmationDialog, showErrorNotification, showSuccessNotification } from '../../toastify.js';
 
-// nome e input do post
 export default () => {
   const timeline = document.createElement('div');
   const viewPost = `
-  <div class='container'>
-
-    <div class='left-timeline'>
-      <p class='postTitle'>Olá ${getUserName()}, bem-vindo(a) de volta!</p>
-      <figure class='icones'>
-        <button type='button' class='button-timeline' id='home-btn'><img src='${profileicon}' class='icon-timeline' alt='Icone Perfil'></button>
-        <button type='button' class='button-timeline' id='logout-btn'><img src='${exiticon}' class='icon-timeline' alt='logout icon'></button>
-      </figure>
-      
-    </div>
-
-    <div class='right-timeline'>
-      <div class='input-container'>
-        <textarea class='input-message' id='postArea' placeholder='Compartilhe...'></textarea>
-        <button class='shareBtn' id='sharePost'>COMPARTILHAR</button>
+    <div class='container'>
+      <div class='left-timeline'>
+        <p class='postTitle'>Olá ${getUserName()}, bem-vindo(a) de volta!</p>
+        <figure class='icones'>
+          <button type='button' class='button-timeline' id='home-btn'><img src='${profileicon}' class='icon-timeline' alt='Icone Perfil'></button>
+          <button type='button' class='button-timeline' id='logout-btn'><img src='${exiticon}' class='icon-timeline' alt='logout icon'></button>
+        </figure>
       </div>
-
+      <div class='right-timeline'>
+        <div class='input-container'>
+          <textarea class='input-message' id='postArea' placeholder='Compartilhe...'></textarea>
+          <button class='shareBtn' id='sharePost'>COMPARTILHAR</button>
+        </div>
         <div id='postList'></div>
-
+      </div>
     </div>
-
-  </div>
   `;
 
   timeline.innerHTML = viewPost;
@@ -48,7 +42,6 @@ export default () => {
   const logOutBtn = timeline.querySelector('#logout-btn');
   const profileBtn = timeline.querySelector('#home-btn');
 
-  // elementos do post
   const createPostElement = (
     name,
     createdAt,
@@ -67,32 +60,33 @@ export default () => {
     const createdAtFormatted = `${createdAtFormattedDate} ~ ${createdAtFormattedTime}`;
     const postElement = document.createElement('div');
     postElement.innerHTML = `
-      <div class='post-container'>
+     <div class='post-container'>
         <div class='nameUser'>
           <p class='userName'>${name}</p>
           <p class='dataPost'>${createdAtFormatted}</p>
         </div>
         <p class='textPost'>${description}</p>
-          <div class='image-icons'>
-            <button type='button' class='icons-post' id='like-Post' data-post-id='${postId}'>
-              <a class='icons-post' id='icons-post'><img src='${likeicon}' alt='like image' class='icons-post'></a>
-              <span class='likePost' id='likes-counter-${postId}'>${whoLiked.length}</span>
-            </button>
-            
-          ${authorId === getUserId() ? `<button type='button' data-post-id='${postId}' class='icons-post' id='editPost'>
-            <a class='icons-post'><img src='${editicon}' alt='edit image' class='icons-post'></a>
+        <div class='image-icons'>
+          <button type='button' class='icons-post' id='like-Post' data-post-id='${postId}'>
+            <a class='icons-post' id='icons-post'><img src='${likeicon}' alt='like image' class='icons-post'></a>
+            <span class='likePost' id='likes-counter-${postId}'>${whoLiked.length}</span>
+          </button>
+          ${authorId === getUserId()
+    ? `<button type='button' data-post-id='${postId}' class='icons-post' id='editPost'>
+        <a class='icons-post'><img src='${editicon}' alt='edit image' class='icons-post'></a>
           </button>
           <button type='button' class='icons-post' id='btn-delete' data-post-id='${postId}'>
-            <img src='${deleteicon}' alt='delete image' class='icons-post'>
-          </button>` : ''}
+          <img src='${deleteicon}' alt='delete image' class='icons-post'>
+          </button>`
+    : ''
+}
         </div>
       </div>
-`;
+    `;
 
     return postElement;
   };
 
-  // lista dos posts
   const updateListPost = (TodosPosts) => {
     postList.innerHTML = '';
     TodosPosts.forEach(async (post) => {
@@ -123,7 +117,7 @@ export default () => {
           }
           likesCounter.innerText = currentLikes;
         } catch (error) {
-          console.error('Error ao dar like:', error);
+          showErrorNotification('Erro ao dar like');
         }
       });
     });
@@ -133,41 +127,47 @@ export default () => {
     accessPost(updateListPost);
   };
 
-  // alertas
   const handlePostBtnClick = () => {
     const description = descriptionPost.value;
 
     if (!description) {
-      alert('Preencha o campo');
+      showErrorNotification('Preencha o campo');
     } else {
       createPost(description)
         .then(() => {
           descriptionPost.value = '';
-          alert('Publicação efetuada com sucesso!');
+          showSuccessNotification('Publicação efetuada com sucesso!');
         })
         .catch(() => {
-          alert('Ocorreu um erro ao criar o post. Por favor, tente novamente mais tarde');
+          showErrorNotification(
+            'Ocorreu um erro ao criar o post. Por favor, tente novamente mais tarde',
+          );
         });
     }
   };
 
-  // clicks
   const handlePostListClick = (event) => {
     const target = event.target;
     const deleteButton = target.closest('#btn-delete');
     const editButton = target.closest('#editPost');
     if (deleteButton) {
       const postId = deleteButton.getAttribute('data-post-id');
-      if (window.confirm('Tem certeza de que deseja excluir a publicação?')) {
-        deletePost(postId)
-          .then(() => {
-            target.closest('.post-container').remove();
-            alert('Publicação excluída com sucesso!');
-          })
-          .catch((error) => {
-            alert('Ocorreu um erro ao excluir o post. Por favor, tente novamente mais tarde', error);
-          });
-      }
+      showConfirmationDialog(
+        'Tem certeza de que deseja excluir a publicação?',
+        () => {
+          deletePost(postId)
+            .then(() => {
+              target.closest('.post-container').remove();
+              showSuccessNotification('Publicação excluída com sucesso!');
+            })
+            .catch((error) => {
+              showErrorNotification(
+                'Ocorreu um erro ao excluir o post. Por favor, tente novamente mais tarde',
+                error,
+              );
+            });
+        },
+      );
     } else if (editButton) {
       const postId = editButton.getAttribute('data-post-id');
       const postElement = editButton.closest('.post-container');
@@ -177,10 +177,12 @@ export default () => {
         updatePost(postId, { description: newText })
           .then(() => {
             textPostElement.textContent = newText;
-            alert('Post atualizado com sucesso!');
+            showSuccessNotification('Post atualizado com sucesso!');
           })
           .catch(() => {
-            alert('Ocorreu um erro ao editar o post. Por favor, tente novamente mais tarde');
+            showErrorNotification(
+              'Ocorreu um erro ao editar o post. Por favor, tente novamente mais tarde',
+            );
           });
       }
     }
@@ -189,30 +191,26 @@ export default () => {
   postBtn.addEventListener('click', handlePostBtnClick);
   postList.addEventListener('click', handlePostListClick);
 
-  // função de logout
   profileBtn.addEventListener('click', () => {
     logout()
       .then(() => {
         window.location.hash = '#perfil';
       })
       .catch(() => {
-        alert('Ocorreu um erro, tente novamente.');
+        showErrorNotification('Ocorreu um erro, tente novamente.');
       });
   });
 
-  // função de logout
   logOutBtn.addEventListener('click', () => {
     logout()
       .then(() => {
         window.location.hash = '#login';
       })
       .catch(() => {
-        alert('Ocorreu um erro, tente novamente.');
+        showErrorNotification('Ocorreu um erro, tente novamente.');
       });
   });
 
   loadPosts();
   return timeline;
 };
-
-

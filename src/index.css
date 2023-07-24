@@ -1,9 +1,8 @@
 :root {
-    --blue: #30a2ff;
-    --darkblue: #491a9d;
-    --lightblue: #6838bc;
-    --white: #ffffff;
-    --black: #000000;
+    --easternblue: #179FB4;
+    --junglemist: #B5D1D6;
+    --timbergreen: #17322A;
+    --greenpea: #165345; 
   }
   
   * {
@@ -14,8 +13,8 @@
   }
   
   body {
-    color: var(--black);
-    font-family: "Inter";
+    color: var(--timbergreen);
+    font-family: "Inter", Arial, sans-serif;
     text-align: center;
     justify-content: center;
     background-image: url(images/background.png);
@@ -31,10 +30,11 @@
   }
   
   footer {
-    color: var(--white);
-    background-color: rgba(62, 194, 165, 0.863);
+    color: var(--timbergreen);
+    background-color: var(--easternblue);
     padding: 1em;
-    font-size: 0.6rem;
+    font-size: 0.7rem;
+    font-weight: bold;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -43,9 +43,10 @@
   }
   
   footer a {
-    color: var(--white);
+    color: var(--timbergreen);
     text-decoration: none;
-    font-weight: bold;
+    font-weight: bolder;
+    font-size: 0.8rem;
     filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.25));
     letter-spacing: 0.09em;
   }
@@ -59,6 +60,23 @@
     flex-direction: column;
     position: relative;
   }
+
+  ::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--easternblue);
+    border: 0.1em solid var(--easternblue);
+    border-radius: 0.3em;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--junglemist);
+    border: 0.1em solid var(--easternblue);
+    border-radius: 0.3em;
+}
+
   
   @media screen and (max-width: 768px) {
     body {

@@ -1,6 +1,6 @@
 .user-profile {
     padding: 1rem;
-    background-color: rgba(167, 241, 213, 0.753);
+    background-color: #179fb49f;
   }
   
   .profile {
@@ -10,16 +10,12 @@
   h2 {
     margin: 0;
     font-size: 1.7rem;
+    color: var(--timbergreen)
   }
   
   .profile-content {
     margin-bottom: 1rem;
     margin-top: 12rem;
-  }
-  
-  .post {
-    background-color: #f0f0f0;
-    padding: 1rem;
   }
   
   .profile-actions {
@@ -45,7 +41,9 @@
   
   a {
     text-decoration: none;
-    color: #000;
+    color: var(--timbergreen);
+    font-weight: bold;
+    font-size: 1rem;
   }
   
  /* Responsivo */

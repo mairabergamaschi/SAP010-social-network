@@ -46,7 +46,6 @@ export default () => {
       await createUserWithEmail(name, lastName, email, password);
       window.location.hash = '#timeline';
     } catch (error) {
-      console.error('Erro ao registrar o usuário:', error);
       const printError = errorsFirebase(error.code);
       printErrorMessage(printError || 'Erro ao registrar o usuário');
     }

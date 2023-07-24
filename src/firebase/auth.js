@@ -28,7 +28,6 @@ export const getUserName = () => {
   if (user) {
     return user.displayName;
   }
-  return 'Usuária';
 };
 
 // cria o documento na db com os dados do Usuário

@@ -5,9 +5,10 @@ import {
   loginFacebook,
 } from '../../firebase/auth.js';
 import { errorsFirebase } from '../../validations.js';
-import logologin from '../../images/logologin.png';
+import logologin from '../../images/Logoverde.png';
 import icongoogle from '../../images/iconGoogle.png';
 import iconfacebook from '../../images/iconFacebook.png';
+import { showSuccessNotification } from '../../toastify.js';
 
 // formulario de login
 export default () => {
@@ -94,7 +95,7 @@ export default () => {
     const email = emailInput.value;
     auth.sendPasswordResetEmail(email)
       .then(() => {
-        alert('Um e-mail foi enviado para redefinir sua senha. Verifique sua caixa de entrada.');
+        showSuccessNotification('Um e-mail foi enviado para redefinir sua senha. Verifique sua caixa de entrada.');
       })
       .catch((error) => {
         const errorMessage = errorsFirebase(error.code) || 'Falha ao enviar e-mail de recuperação de senha.';
