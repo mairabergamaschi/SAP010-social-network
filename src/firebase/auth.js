@@ -10,7 +10,7 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { app, db } from './firebase.js';
+import { app, db } from './firebase';
 
 // autenticação
 export const getAppAuth = () => getAuth(app);

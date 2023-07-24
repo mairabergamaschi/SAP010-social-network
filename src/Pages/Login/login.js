@@ -94,6 +94,7 @@ export default () => {
     const email = emailInput.value;
     auth.sendPasswordResetEmail(email)
       .then(() => {
+        // eslint-disable-next-line no-alert
         alert('Um e-mail foi enviado para redefinir sua senha. Verifique sua caixa de entrada.');
       })
       .catch((error) => {

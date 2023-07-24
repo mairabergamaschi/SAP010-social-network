@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import login from './pages/login/login.js';
 import register from './pages/Cadastro/cadastro.js';
 import timeline from './pages/Feed/feed.js';

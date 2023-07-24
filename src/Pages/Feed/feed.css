@@ -106,7 +106,7 @@
     text-align: center;
     word-wrap: break-word;
     resize: vertical;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
     padding: 1.5em;
     font-size: 0.6em;
     font-weight: bold;
@@ -128,7 +128,7 @@
     margin-top: 1em;
     font-size: 0.6em;
     text-shadow: -0.5px 0.5px 0 var(--black), 0.5px 0.5px 0 var(--black);
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif;
 }
 
 .post-container {

@@ -1,4 +1,5 @@
-import { getUserName, getUserId, logout } from '../../firebase/auth.js';
+/* eslint-disable no-alert */
+import { getUserName, logout } from '../../firebase/auth.js';
 import profileicon from '../../images/photoicon.png';
 import returnIcon from '../../images/arrow.png';
 import logoutIcon from '../../images/iconExit.png';
@@ -6,7 +7,6 @@ import logoutIcon from '../../images/iconExit.png';
 export default () => {
   const profile = document.createElement('div');
   const name = getUserName();
-  
   const profileSection = `
     <section class="user-profile">
       <div class="profile-header">
