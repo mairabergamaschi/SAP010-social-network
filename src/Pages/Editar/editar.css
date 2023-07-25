@@ -87,3 +87,42 @@ input#birthdate {
     margin-bottom: 1rem;
     margin-top: 1rem;
 }
+
+@media screen and (max-width: 900px) {
+    .profile-edit {
+        width: 65%;
+    }
+
+    .image {
+        margin-left: -3rem;
+    }
+
+    .bio{
+        height: 26rem;
+    }
+
+    button.capa {
+        width: 30%;
+        border-radius: 5px;
+        height: 2rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .boxes,
+    #notifications,
+    #biography,
+    input#birthdate {
+        width: 65%;
+    }
+
+    .save,
+    .logout-button {
+        width: 50%;
+    }
+
+    .security {
+        width: 80%;
+        height: 23rem;
+    }
+}
