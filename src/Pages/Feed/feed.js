@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-alert */
 import { getUserName, getUserId, logout } from '../../firebase/auth.js';
 import {
   createPost,
