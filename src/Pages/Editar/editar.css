@@ -1,7 +1,7 @@
 .profile-edit {
     background: var(--easternblue);
     border-radius: 6px;
-    width: 65em;
+    width: 65%;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -65,11 +65,11 @@ button.capa {
 }
 
 .security {
-    width: 48%;
+    width: 58%;
     background-color: var(--junglemist);
     display: list-item;
     margin: auto;
-    height: 16rem;
+    height: 17rem;
 }
 
 label.segurança {
