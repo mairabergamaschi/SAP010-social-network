@@ -27,9 +27,8 @@ export default () => {
   profile.innerHTML = profileSection;
 
   const handleReturnToFeedClick = () => {
-        window.location.hash = '#timeline';
+    window.location.hash = '#timeline';
   };
-
 
   const handleLogoutClick = () => {
     logout()
