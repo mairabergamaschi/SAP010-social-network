@@ -26,7 +26,7 @@ export const getUserId = () => {
 export const getUserName = () => {
   const auth = getAppAuth();
   const user = auth.currentUser;
-  if (user) {
+  if (user.displayName) {
     return user.displayName;
   }
   return ''; // Retornar null ou uma string vazia;
