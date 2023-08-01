@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import Toastify from 'toastify-js';
 
 // Configurações padrão do Toastify

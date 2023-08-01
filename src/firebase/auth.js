@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -54,27 +55,36 @@ export const createUserWithEmail = async (name, lastName, email, password) => {
 };
 
 // faz o login com email
-export const loginWithEmail = (email, password) => {
-  const auth = getAppAuth();
-  return signInWithEmailAndPassword(auth, email, password);
+export const loginWithEmail = async (email, password) => {
+  try {
+    const auth = getAppAuth();
+    await signInWithEmailAndPassword(auth, email, password);
+    console.log('Usuário logado com sucesso');
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log('O usuário está autenticado:', user);
+      } else {
+        console.log('O usuário não está autenticado');
+      }
+    });
+  } catch (error) {
+    console.log('Erro ao logar usuário', error.message);
+    throw error;
+  }
 };
 
 // login com o google
 export const loginGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const auth = getAppAuth();
-  const userCredential = await signInWithPopup(auth, provider);
-  const user = userCredential.user;
-  return createUserDocument(user);
+  await signInWithPopup(auth, provider);
 };
 
 // login com o facebook - verificar
 export const loginFacebook = async () => {
   const provider = new FacebookAuthProvider();
   const auth = getAppAuth();
-  const userCredential = await signInWithPopup(auth, provider);
-  const user = userCredential.user;
-  return createUserDocument(user);
+  await signInWithPopup(auth, provider);
 };
 
 // função de logout
