@@ -84,7 +84,8 @@ O produto visa resolver o problema da falta de uma plataforma centralizada para 
 * A página inicial foi projetada com uma imagem atraente e texto de boas-vindas.
 * O design é responsivo e se adapta a diferentes tamanhos de tela.
 * A funcionalidade de login e cadastro foi implementada e testada.
-* Como um usuário novo, eu quero poder me cadastrar no site para criar uma conta.
+
+2. Como um usuário novo, eu quero poder me cadastrar no site para criar uma conta.
 
 *Critérios de Aceitação:*
 
@@ -97,7 +98,8 @@ O produto visa resolver o problema da falta de uma plataforma centralizada para 
 * A página de cadastro foi projetada com os campos necessários para o registro.
 * A funcionalidade de cadastro foi implementada e testada.
 * Os botões de cadastro com o Google ou Facebook estão funcionando corretamente.
-* Como um usuário registrado, eu quero poder fazer login no site para acessar minha conta.
+
+3. Como um usuário registrado, eu quero poder fazer login no site para acessar minha conta.
 
 *Critérios de Aceitação:*
 
@@ -113,40 +115,40 @@ O produto visa resolver o problema da falta de uma plataforma centralizada para 
 * A funcionalidade de login foi implementada e testada.
 * O link para redefinir a senha e para a página de cadastro estão funcionando corretamente.
 * Os botões de login com o Google ou Facebook estão funcionando corretamente.
-* Como um usuário autenticado, eu quero ver uma página inicial com recursos e funcionalidades relevantes.
+
+4. Como um usuário autenticado, eu quero ver uma página inicial com recursos e funcionalidades relevantes.
 
 *Critérios de Aceitação:*
 
-* A página inicial exibe ícones de notificação e perfil.
-* Existe uma caixa de pesquisa para buscar por destino ou palavra-chave.
+* A página inicial exibe ícones de logout e perfil.
 * Há uma caixa de texto para postagem de conteúdo.
 * As postagens de outros usuários são exibidas com opções de curtir e comentar.
+* Consigo editar e excluir as postagens.
 
 *Definição de Pronto:*
 
-* A página inicial foi projetada para exibir os ícones de notificação e perfil do usuário.
-* A funcionalidade de pesquisa foi implementada e testada.
+* A página inicial foi projetada para exibir os ícones de logout e perfil do usuário.
 * A caixa de texto para postagem de conteúdo está funcional.
 * As postagens de outros usuários estão sendo exibidas corretamente com as opções de curtir e comentar.
-* Como um usuário autenticado, eu quero poder visualizar e interagir com o meu perfil.
+* O usuário consegue editar e excluir suas próprias postagens.
+
+5. Como um usuário autenticado, eu quero poder visualizar e interagir com o meu perfil.
 
 *Critérios de Aceitação:*
 
-* A página do perfil exibe um ícone de notificação.
 * A imagem de perfil e o nome do usuário são exibidos.
-* Existem botões para acessar as publicações e editar o perfil.
+* Existem botões para editar o perfil e fazer logout.
 * As últimas publicações do usuário são exibidas.
 
 *Definição de Pronto:*
 
-* A página do perfil foi projetada para exibir o ícone de notificação, imagem de perfil e nome do usuário.
-* A funcionalidade para acessar as publicações e editar o perfil foram implementadas e testadas.
-* As últimas publicações do usuário estão sendo exibidas corretamente.
-* Como um usuário autenticado, eu quero poder editar meu perfil para personalizar as informações exibidas.
+* A página do perfil foi projetada para exibir o ícone de logout, imagem de perfil e nome do usuário.
+* A funcionalidade para editar o perfil foi implementada e testada.
+
+6. Como um usuário autenticado, eu quero poder editar meu perfil para personalizar as informações exibidas.
 
 *Critérios de Aceitação:*
 
-* A página de edição do perfil exibe um ícone de notificação.
 * Existe um campo para editar a foto de perfil.
 * Há um botão para editar a foto de capa.
 * Existem campos para editar o nome completo, informações e personalização.
@@ -154,7 +156,7 @@ O produto visa resolver o problema da falta de uma plataforma centralizada para 
 
 *Definição de Pronto:*
 
-* A página de edição do perfil foi projetada para exibir o ícone de notificação e campos para edição.
+* A página de edição do perfil foi projetada para exibir campos para edição.
 * A funcionalidade para editar a foto de perfil e de capa foram implementadas e testadas.
 * Os campos para edição do nome completo, informações e personalização foram implementados e testados.
 * O botão "Sair" está funcionando corretamente para fazer logout do site.
