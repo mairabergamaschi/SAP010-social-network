@@ -3,13 +3,11 @@
 ## 
 **Acesse o projeto:**
 
-![Ícone do Ladies On The Go](src/images/icon.pagina.png)
-
-[<img alt="WEBSITE" height="50" src="src/images/icon.pagina.png">](https://ladiesonthego-13672.firebaseapp.com/#login)
+[<img alt="WEBSITE" height="80" src="src/images/icon.pagina.png">](https://ladiesonthego-13672.firebaseapp.com/#login)
 
 **Tecnologias utilizadas**
 
-<img alt="Figma" height="45" src="https://cdn4.iconfinder.com/data/icons/logos-brands-in-colors/3000/figma-logo-256.png" /><img alt="git" height="40"  src="https://cdn3.iconfinder.com/data/icons/social-media-2169/24/social_media_social_media_logo_git-256.png" /><img alt="github" height="45"  src="https://cdn1.iconfinder.com/data/icons/unicons-line-vol-3/24/github-256.png" /><img alt="HTML" height="50"  src="https://cdn2.iconfinder.com/data/icons/designer-skills/128/code-programming-html-markup-develop-layout-language-512.png"> <img alt="CSS" height="50" src="https://cdn2.iconfinder.com/data/icons/designer-skills/128/code-programming-css-style-develop-layout-language-512.png"> <img alt="JS" height="50" src="https://cdn2.iconfinder.com/data/icons/designer-skills/128/code-programming-javascript-software-develop-command-language-256.png"> <img alt="Firebase" height="50" src="https://cdn4.iconfinder.com/data/icons/google-i-o-2016/512/google_firebase-512.png"> <img alt="Vite" height="50" src="https://www.svgrepo.com/show/374167/vite.svg">   
+<img alt="Figma" height="45" src="https://cdn4.iconfinder.com/data/icons/logos-brands-in-colors/3000/figma-logo-256.png" /><img alt="Trello" height="45" src="src/images/trello.png" /><img alt="git" height="40"  src="https://cdn3.iconfinder.com/data/icons/social-media-2169/24/social_media_social_media_logo_git-256.png" /><img alt="github" height="45"  src="https://cdn1.iconfinder.com/data/icons/unicons-line-vol-3/24/github-256.png" /><img alt="HTML" height="50"  src="https://cdn2.iconfinder.com/data/icons/designer-skills/128/code-programming-html-markup-develop-layout-language-512.png"> <img alt="CSS" height="50" src="https://cdn2.iconfinder.com/data/icons/designer-skills/128/code-programming-css-style-develop-layout-language-512.png"> <img alt="JS" height="50" src="https://cdn2.iconfinder.com/data/icons/designer-skills/128/code-programming-javascript-software-develop-command-language-256.png"> <img alt="Firebase" height="50" src="https://cdn4.iconfinder.com/data/icons/google-i-o-2016/512/google_firebase-512.png"> <img alt="Vite" height="50" src="https://www.svgrepo.com/show/374167/vite.svg">   
 
 
 
