@@ -61,11 +61,11 @@ Backend: Para o backend, utilizamos a plataforma Firebase, que oferece recursos 
 
 ## Definição do Produto
 
-# Principais Usuários
+## Principais Usuários
 
 Os principais usuários do produto são mulheres que desejam se conectar com outras, compartilhar suas ideias, interesses e experiências com uma comunidade online. O aplicativo é voltado para usuárias de várias idades e interesses, buscando fornecer uma experiência amigável e segura para todos.
 
-# Problema Resolvido
+## Problema Resolvido
 
 O produto visa resolver o problema da falta de uma plataforma centralizada para compartilhar e interagir com outras mulheres com os mesmos interesses. Muitas vezes, as redes sociais existentes podem se tornar muito amplas ou focadas em apenas um tipo de conteúdo. O Ladies On The Go busca proporcionar um ambiente inclusivo e diversificado para as usuárias compartilharem diferentes tipos de conteúdo e se conectarem com pessoas de interesses similares.
 
