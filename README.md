@@ -169,7 +169,7 @@ Usuario 2 : Acessado por celular e navegador. Observou a necessidade de um botã
 
 ## Considerações gerais
 
-* O Ladies On The Go foi criado com muito amor e dedicação, com o propósito de ser um espaço acolhedor e inspirador para mulheres viajantes. Nossa equipe valoriza a inclusão, a diversidade e o respeito mútuo, tornando o site um ambiente positivo e enriquecedor.
+O Ladies On The Go foi criado com muito amor e dedicação, com o propósito de ser um espaço acolhedor e inspirador para mulheres viajantes. Nossa equipe valoriza a inclusão, a diversidade e o respeito mútuo, tornando o site um ambiente positivo e enriquecedor.
 
 Agradecemos a todas as mulheres viajantes que contribuíram para a criação deste projeto, compartilhando suas histórias e ideias. Também agradecemos à equipe de desenvolvimento por seu esforço e habilidade na criação desta plataforma.
 
