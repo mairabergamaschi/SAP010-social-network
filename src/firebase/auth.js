@@ -29,7 +29,7 @@ export const getUserName = () => {
   if (user.displayName) {
     return user.displayName;
   }
-  return ''; // Retornar null ou uma string vazia;
+  return '';
 };
 
 // cria o documento na db com os dados do Usuário
@@ -55,22 +55,9 @@ export const createUserWithEmail = async (name, lastName, email, password) => {
 };
 
 // faz o login com email
-export const loginWithEmail = async (email, password) => {
-  try {
-    const auth = getAppAuth();
-    await signInWithEmailAndPassword(auth, email, password);
-    console.log('Usuário logado com sucesso');
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log('O usuário está autenticado:', user);
-      } else {
-        console.log('O usuário não está autenticado');
-      }
-    });
-  } catch (error) {
-    console.log('Erro ao logar usuário', error.message);
-    throw error;
-  }
+export const loginWithEmail = (email, password) => {
+  const auth = getAppAuth();
+  return signInWithEmailAndPassword(auth, email, password);
 };
 
 // login com o google
