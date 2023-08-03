@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import {
   FacebookAuthProvider,
   GoogleAuthProvider,
@@ -67,15 +68,8 @@ describe('loginFacebook', () => {
   });
 });
 
-describe('checkLoggedUser', () => {
-  it('deve verificar se o usuário logado está autenticado', () => {
-    checkLoggedUser();
-    expect(onAuthStateChanged).toHaveBeenCalledTimes(1);
-  });
-});
-
 describe('createUserWithEmail', () => {
-  it('should create a new user', async () => {
+  it('deve criar um novo usuário', async () => {
     const authMock = getAuth();
     createUserWithEmailAndPassword.mockResolvedValue(mockUserCredential);
     updateProfile.mockResolvedValue(mockUpdateUserProfile);
@@ -115,7 +109,7 @@ describe('loginWithEmail', () => {
 });
 
 describe('getUserId', () => {
-  it('should return the current user ID', () => {
+  it('deve retornar o user ID', () => {
     const userId = 'user123';
     const authMock = {
       currentUser: {
@@ -123,14 +117,16 @@ describe('getUserId', () => {
       },
     };
     getAuth.mockReturnValue(authMock);
+
     const result = getUserId();
+
     expect(result).toBe(userId);
   });
 });
 
 describe('getUserName', () => {
-  it('deve retornar o nome de usuário se o usuário for autenticado', () => {
-    const displayName = 'Testando';
+  it('deve retornar o nome se for autenticado', () => {
+    const displayName = 'Thais Alves';
     const authMock = {
       currentUser: {
         displayName,
@@ -142,11 +138,63 @@ describe('getUserName', () => {
 
     expect(result).toBe(displayName);
   });
+
+  it('deve retornar "Usuária" se não estiver autenticado', () => {
+    const authMock = 'Usuária';
+    getAuth.mockReturnValue(authMock);
+
+    const result = getUserName();
+
+    expect(result).toBe('Usuária');
+  });
 });
 
 describe('logout', () => {
-  it('Deveria deslogar', async () => {
-    await logout();
-    expect(signOut).toHaveBeenCalled();
+  it('deve deslogar o usuario', () => {
+    const authMock = getAuth();
+    signOut.mockResolvedValue({
+      user: {},
+    });
+    logout();
+    expect(signOut).toHaveBeenCalledTimes(1);
+    expect(signOut).toHaveBeenCalledWith(authMock);
+  });
+});
+
+describe('checkLoggedUser', () => {
+  it('dever ser uma função', () => {
+    expect(typeof checkLoggedUser).toBe('function');
+  });
+
+  it('deve retornar true se estiver logado', async () => {
+    const authMock = getAuth();
+    const onAuthStateChangedMock = jest.fn((auth, callback) => {
+      callback({ uid: 'user1234' });
+    });
+    onAuthStateChanged.mockImplementation(onAuthStateChangedMock);
+
+    const result = await checkLoggedUser();
+
+    expect(result).toBe(true);
+    expect(onAuthStateChangedMock).toHaveBeenCalledWith(
+      authMock,
+      expect.any(Function),
+    );
+  });
+
+  it('deve retornar false se não estiver logado', async () => {
+    const authMock = getAuth();
+    const onAuthStateChangedMock = jest.fn((auth, callback) => {
+      callback(null);
+    });
+    onAuthStateChanged.mockImplementation(onAuthStateChangedMock);
+
+    const result = await checkLoggedUser();
+
+    expect(result).toBe(false);
+    expect(onAuthStateChangedMock).toHaveBeenCalledWith(
+      authMock,
+      expect.any(Function),
+    );
   });
 });

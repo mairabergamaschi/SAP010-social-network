@@ -26,10 +26,10 @@ export const getUserId = () => {
 export const getUserName = () => {
   const auth = getAppAuth();
   const user = auth.currentUser;
-  if (user.displayName) {
+  if (user) {
     return user.displayName;
   }
-  return '';
+  return 'Usuária';
 };
 
 // cria o documento na db com os dados do Usuário

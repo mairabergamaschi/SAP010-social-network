@@ -94,8 +94,8 @@ export const likePost = async (postId, userId) => {
       }
     }
   }
-  const washingtonRef = doc(db, 'posts', postId);
-  await updateDoc(washingtonRef, {
+  const thaisRef = doc(db, 'posts', postId);
+  await updateDoc(thaisRef, {
     whoLiked: arrayRemove(userId),
   });
   return 'remove like';
