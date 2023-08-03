@@ -7,14 +7,37 @@ import {
   auth,
   signOut,
   getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
 } from 'firebase/auth';
 
 import {
-  checkLoggedUser, getUserId, getUserName, loginFacebook, loginGoogle, loginWithEmail, logout,
+  checkLoggedUser,
+  createUserWithEmail,
+  getUserId,
+  getUserName,
+  loginFacebook,
+  loginGoogle,
+  loginWithEmail,
+  logout,
 } from '../src/firebase/auth.js';
 
 jest.mock('firebase/auth');
+jest.mock('firebase/firestore');
 jest.mock('../src/firebase/firebase.js');
+
+const mockUserCredential = {
+  user: {
+    displayName: 'Thais Alves',
+    uid: 'uid7865',
+  },
+};
+
+const mockUpdateUserProfile = {
+  uid: 'uid7865',
+  email: 'exemplo@example.com',
+  displayName: 'Thais Alves',
+};
 
 afterEach(() => {
   jest.clearAllMocks();
@@ -48,6 +71,27 @@ describe('checkLoggedUser', () => {
   it('deve verificar se o usuário logado está autenticado', () => {
     checkLoggedUser();
     expect(onAuthStateChanged).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('createUserWithEmail', () => {
+  it('should create a new user', async () => {
+    const authMock = getAuth();
+    createUserWithEmailAndPassword.mockResolvedValue(mockUserCredential);
+    updateProfile.mockResolvedValue(mockUpdateUserProfile);
+    const name = 'Thais';
+    const lastName = 'Alves';
+    const email = 'exemplo@exemplo.com';
+    const password = '123456';
+
+    await createUserWithEmail(name, lastName, email, password);
+
+    expect(createUserWithEmailAndPassword).toHaveBeenCalledTimes(1);
+    expect(createUserWithEmailAndPassword).toHaveBeenCalledWith(
+      authMock,
+      email,
+      password,
+    );
   });
 });
 

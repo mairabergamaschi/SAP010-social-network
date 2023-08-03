@@ -1,4 +1,4 @@
-import login from './pages/Login/login.js';
+import login from './pages/login/login.js';
 import register from './pages/Cadastro/cadastro.js';
 import timeline from './pages/Feed/feed.js';
 import profile from './pages/Perfil/perfil.js';
